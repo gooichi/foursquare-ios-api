@@ -1,0 +1,330 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		674BDDA01460CE0200320FF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDD9F1460CE0200320FF0 /* UIKit.framework */; };
+		674BDDA21460CE0200320FF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDA11460CE0200320FF0 /* Foundation.framework */; };
+		674BDDA41460CE0200320FF0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDA31460CE0200320FF0 /* CoreGraphics.framework */; };
+		674BDDAA1460CE0200320FF0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 674BDDA81460CE0200320FF0 /* InfoPlist.strings */; };
+		674BDDAC1460CE0200320FF0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDAB1460CE0200320FF0 /* main.m */; };
+		674BDDB01460CE0200320FF0 /* FSQAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDAF1460CE0200320FF0 /* FSQAppDelegate.m */; };
+		674BDDB31460CE0200320FF0 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 674BDDB11460CE0200320FF0 /* MainStoryboard.storyboard */; };
+		674BDDB61460CE0200320FF0 /* FSQMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDB51460CE0200320FF0 /* FSQMasterViewController.m */; settings = {COMPILER_FLAGS = "-D'FOURSQUARE_CLIENT_ID=@\"$(FOURSQUARE_CLIENT_ID)\"' -D'FOURSQUARE_CALLBACK_URL=@\"$(FOURSQUARE_CALLBACK_URL)\"'"; }; };
+		674BDDEB14614E8600320FF0 /* BZFoursquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDE814614E8600320FF0 /* BZFoursquare.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		674BDDEC14614E8600320FF0 /* BZFoursquareRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		674BDDEF14614ED500320FF0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */; };
+		67E255A21461781B00FE88BD /* TokyoBa-Z.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 67E255A11461781B00FE88BD /* TokyoBa-Z.jpg */; };
+		D7F848101462649800C0ACDD /* FSQJSONObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7F8480F1462649800C0ACDD /* FSQJSONObjectViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		674BDD9B1460CE0200320FF0 /* FSQDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FSQDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		674BDD9F1460CE0200320FF0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		674BDDA11460CE0200320FF0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		674BDDA31460CE0200320FF0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		674BDDA71460CE0200320FF0 /* FSQDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FSQDemo-Info.plist"; sourceTree = "<group>"; };
+		674BDDA91460CE0200320FF0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		674BDDAB1460CE0200320FF0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		674BDDAD1460CE0200320FF0 /* FSQDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FSQDemo-Prefix.pch"; sourceTree = "<group>"; };
+		674BDDAE1460CE0200320FF0 /* FSQAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSQAppDelegate.h; sourceTree = "<group>"; };
+		674BDDAF1460CE0200320FF0 /* FSQAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSQAppDelegate.m; sourceTree = "<group>"; };
+		674BDDB21460CE0200320FF0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		674BDDB41460CE0200320FF0 /* FSQMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSQMasterViewController.h; sourceTree = "<group>"; };
+		674BDDB51460CE0200320FF0 /* FSQMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSQMasterViewController.m; sourceTree = "<group>"; };
+		674BDDE714614E8600320FF0 /* BZFoursquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BZFoursquare.h; sourceTree = "<group>"; };
+		674BDDE814614E8600320FF0 /* BZFoursquare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BZFoursquare.m; sourceTree = "<group>"; };
+		674BDDE914614E8600320FF0 /* BZFoursquareRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BZFoursquareRequest.h; sourceTree = "<group>"; };
+		674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BZFoursquareRequest.m; sourceTree = "<group>"; };
+		674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		67E255A11461781B00FE88BD /* TokyoBa-Z.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "TokyoBa-Z.jpg"; path = "Images/TokyoBa-Z.jpg"; sourceTree = "<group>"; };
+		D7F8480E1462649800C0ACDD /* FSQJSONObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSQJSONObjectViewController.h; sourceTree = "<group>"; };
+		D7F8480F1462649800C0ACDD /* FSQJSONObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSQJSONObjectViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		674BDD981460CE0200320FF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				674BDDA41460CE0200320FF0 /* CoreGraphics.framework in Frameworks */,
+				674BDDA21460CE0200320FF0 /* Foundation.framework in Frameworks */,
+				674BDDEF14614ED500320FF0 /* MobileCoreServices.framework in Frameworks */,
+				674BDDA01460CE0200320FF0 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		674BDD901460CE0100320FF0 = {
+			isa = PBXGroup;
+			children = (
+				674BDDE614614E8600320FF0 /* BZFoursquare */,
+				674BDDA51460CE0200320FF0 /* FSQDemo */,
+				674BDD9E1460CE0200320FF0 /* Frameworks */,
+				674BDD9C1460CE0200320FF0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		674BDD9C1460CE0200320FF0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				674BDD9B1460CE0200320FF0 /* FSQDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		674BDD9E1460CE0200320FF0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				674BDDA31460CE0200320FF0 /* CoreGraphics.framework */,
+				674BDDA11460CE0200320FF0 /* Foundation.framework */,
+				674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */,
+				674BDD9F1460CE0200320FF0 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		674BDDA51460CE0200320FF0 /* FSQDemo */ = {
+			isa = PBXGroup;
+			children = (
+				674BDDAE1460CE0200320FF0 /* FSQAppDelegate.h */,
+				674BDDAF1460CE0200320FF0 /* FSQAppDelegate.m */,
+				D7F8480E1462649800C0ACDD /* FSQJSONObjectViewController.h */,
+				D7F8480F1462649800C0ACDD /* FSQJSONObjectViewController.m */,
+				674BDDB41460CE0200320FF0 /* FSQMasterViewController.h */,
+				674BDDB51460CE0200320FF0 /* FSQMasterViewController.m */,
+				674BDDB11460CE0200320FF0 /* MainStoryboard.storyboard */,
+				674BDDA61460CE0200320FF0 /* Supporting Files */,
+			);
+			path = FSQDemo;
+			sourceTree = "<group>";
+		};
+		674BDDA61460CE0200320FF0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				674BDDA71460CE0200320FF0 /* FSQDemo-Info.plist */,
+				674BDDAD1460CE0200320FF0 /* FSQDemo-Prefix.pch */,
+				67E2559D146177BD00FE88BD /* Images */,
+				674BDDA81460CE0200320FF0 /* InfoPlist.strings */,
+				674BDDAB1460CE0200320FF0 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		674BDDE614614E8600320FF0 /* BZFoursquare */ = {
+			isa = PBXGroup;
+			children = (
+				674BDDE714614E8600320FF0 /* BZFoursquare.h */,
+				674BDDE814614E8600320FF0 /* BZFoursquare.m */,
+				674BDDE914614E8600320FF0 /* BZFoursquareRequest.h */,
+				674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */,
+			);
+			name = BZFoursquare;
+			path = ../BZFoursquare;
+			sourceTree = "<group>";
+		};
+		67E2559D146177BD00FE88BD /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				67E255A11461781B00FE88BD /* TokyoBa-Z.jpg */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		674BDD9A1460CE0200320FF0 /* FSQDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 674BDDBC1460CE0200320FF0 /* Build configuration list for PBXNativeTarget "FSQDemo" */;
+			buildPhases = (
+				674BDD971460CE0200320FF0 /* Sources */,
+				674BDD981460CE0200320FF0 /* Frameworks */,
+				674BDD991460CE0200320FF0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FSQDemo;
+			productName = FSQDemo;
+			productReference = 674BDD9B1460CE0200320FF0 /* FSQDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		674BDD921460CE0100320FF0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "株式会社バーズコミュニケーション";
+			};
+			buildConfigurationList = 674BDD951460CE0100320FF0 /* Build configuration list for PBXProject "FSQDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 674BDD901460CE0100320FF0;
+			productRefGroup = 674BDD9C1460CE0200320FF0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				674BDD9A1460CE0200320FF0 /* FSQDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		674BDD991460CE0200320FF0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				674BDDAA1460CE0200320FF0 /* InfoPlist.strings in Resources */,
+				674BDDB31460CE0200320FF0 /* MainStoryboard.storyboard in Resources */,
+				67E255A21461781B00FE88BD /* TokyoBa-Z.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		674BDD971460CE0200320FF0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				674BDDEB14614E8600320FF0 /* BZFoursquare.m in Sources */,
+				674BDDEC14614E8600320FF0 /* BZFoursquareRequest.m in Sources */,
+				674BDDB01460CE0200320FF0 /* FSQAppDelegate.m in Sources */,
+				D7F848101462649800C0ACDD /* FSQJSONObjectViewController.m in Sources */,
+				674BDDB61460CE0200320FF0 /* FSQMasterViewController.m in Sources */,
+				674BDDAC1460CE0200320FF0 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		674BDDA81460CE0200320FF0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				674BDDA91460CE0200320FF0 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		674BDDB11460CE0200320FF0 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				674BDDB21460CE0200320FF0 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		674BDDBA1460CE0200320FF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		674BDDBB1460CE0200320FF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		674BDDBD1460CE0200320FF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FOURSQUARE_CALLBACK_URL = "fsqdemo://foursquare";
+				FOURSQUARE_CLIENT_ID = YOUR_CLIENT_ID;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FSQDemo/FSQDemo-Prefix.pch";
+				INFOPLIST_FILE = "FSQDemo/FSQDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		674BDDBE1460CE0200320FF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FOURSQUARE_CALLBACK_URL = "fsqdemo://foursquare";
+				FOURSQUARE_CLIENT_ID = YOUR_CLIENT_ID;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FSQDemo/FSQDemo-Prefix.pch";
+				INFOPLIST_FILE = "FSQDemo/FSQDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		674BDD951460CE0100320FF0 /* Build configuration list for PBXProject "FSQDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				674BDDBA1460CE0200320FF0 /* Debug */,
+				674BDDBB1460CE0200320FF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		674BDDBC1460CE0200320FF0 /* Build configuration list for PBXNativeTarget "FSQDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				674BDDBD1460CE0200320FF0 /* Debug */,
+				674BDDBE1460CE0200320FF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 674BDD921460CE0100320FF0 /* Project object */;
+}
