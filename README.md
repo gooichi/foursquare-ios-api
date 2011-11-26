@@ -11,6 +11,12 @@ A simple Objective-C wrapper for the foursquare API v2. It allows you to integra
 
 ## Requirements
 
+This library requires your app to link against the following frameworks:
+
+* Foundation.framework
+* MobileCoreServices.framework
+* UIKit.framework
+
 If your deployment target is set to iOS 4.3 or earlier, one of the following JSON libraries is required. If your deployment target is set to iOS 5.0 or later, it is not required.
 
 * [JSONKit](https://github.com/johnezang/JSONKit)
