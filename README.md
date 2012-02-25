@@ -44,6 +44,12 @@ If your deployment target is set to iOS 4.3 or earlier, one of the following JSO
 
 	![Compile Sources](https://github.com/baztokyo/foursquare-ios-api/raw/master/images/compile_sources.png "Compile Sources")
 
+	#### MobileCoreServices
+
+	You will need to add the MobileCoreServices library to your project. To do this in Xcode, go to your active target and select the "Build Phases" tab. In the "Link Binary with Libraries" section, click the plus button and select MobileCoreServices from the dialog box that is presented.
+
+	![Mobile Core Services](images/mobilecoreservices.png "Mobile Core Services")
+
 	#### JSON Library
 
 	If your deployment target is set to iOS 4.3 or earlier, [JSONKit](https://github.com/johnezang/JSONKit) or [SBJson](https://github.com/stig/json-framework) is required. If you want to use [JSONKit](https://github.com/johnezang/JSONKit), you need to set the `-DBZ_USE_JSONKIT=1` compiler flag on the BZFoursquareRequest source file. If you want to use [SBJson](https://github.com/stig/json-framework), you need to set the `-DBZ_USE_SBJSON=1` compiler flag on the BZFoursquareRequest source file.
