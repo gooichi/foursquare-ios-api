@@ -163,8 +163,8 @@
 		674BDD921460CE0100320FF0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
-				ORGANIZATIONNAME = "株式会社バーズコミュニケーション";
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 674BDD951460CE0100320FF0 /* Build configuration list for PBXProject "FSQDemo" */;
 			compatibilityVersion = "Xcode 3.2";
