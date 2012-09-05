@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2012 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -56,7 +56,7 @@ static NSString * _BZGetMIMEBoundary() {
     NSDate *date = [NSDate date];
     NSTimeInterval ti = [date timeIntervalSinceReferenceDate];
     NSInteger microSec = floor((ti - floor(ti)) * 1000000.0);
-    return [NSString stringWithFormat:@"Multipart_%@%06ld", [formatter stringFromDate:date], microSec];
+    return [NSString stringWithFormat:@"Multipart_%@%06ld", [formatter stringFromDate:date], (long)microSec];
 }
 
 @interface BZFoursquareRequest ()
