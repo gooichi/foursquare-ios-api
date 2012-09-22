@@ -19,6 +19,9 @@
 		674BDDEC14614E8600320FF0 /* BZFoursquareRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		674BDDEF14614ED500320FF0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */; };
 		67E255A21461781B00FE88BD /* TokyoBa-Z.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 67E255A11461781B00FE88BD /* TokyoBa-Z.jpg */; };
+		D732B41016075726009D8839 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D732B40F16075726009D8839 /* Default.png */; };
+		D732B41316075732009D8839 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D732B41216075732009D8839 /* Default@2x.png */; };
+		D732B4151607573A009D8839 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D732B4141607573A009D8839 /* Default-568h@2x.png */; };
 		D7F848101462649800C0ACDD /* FSQJSONObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7F8480F1462649800C0ACDD /* FSQJSONObjectViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +45,9 @@
 		674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BZFoursquareRequest.m; sourceTree = "<group>"; };
 		674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		67E255A11461781B00FE88BD /* TokyoBa-Z.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "TokyoBa-Z.jpg"; path = "Images/TokyoBa-Z.jpg"; sourceTree = "<group>"; };
+		D732B40F16075726009D8839 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
+		D732B41216075732009D8839 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
+		D732B4141607573A009D8839 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Images/Default-568h@2x.png"; sourceTree = "<group>"; };
 		D7F8480E1462649800C0ACDD /* FSQJSONObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSQJSONObjectViewController.h; sourceTree = "<group>"; };
 		D7F8480F1462649800C0ACDD /* FSQJSONObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSQJSONObjectViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +138,9 @@
 		67E2559D146177BD00FE88BD /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D732B4141607573A009D8839 /* Default-568h@2x.png */,
+				D732B40F16075726009D8839 /* Default.png */,
+				D732B41216075732009D8839 /* Default@2x.png */,
 				67E255A11461781B00FE88BD /* TokyoBa-Z.jpg */,
 			);
 			name = Images;
@@ -163,7 +172,7 @@
 		674BDD921460CE0100320FF0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 674BDD951460CE0100320FF0 /* Build configuration list for PBXProject "FSQDemo" */;
@@ -190,6 +199,9 @@
 			files = (
 				674BDDAA1460CE0200320FF0 /* InfoPlist.strings in Resources */,
 				674BDDB31460CE0200320FF0 /* MainStoryboard.storyboard in Resources */,
+				D732B4151607573A009D8839 /* Default-568h@2x.png in Resources */,
+				D732B41016075726009D8839 /* Default.png in Resources */,
+				D732B41316075732009D8839 /* Default@2x.png in Resources */,
 				67E255A21461781B00FE88BD /* TokyoBa-Z.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
