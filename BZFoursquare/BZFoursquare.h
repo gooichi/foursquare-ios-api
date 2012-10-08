@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2012 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -31,6 +31,7 @@
 @interface BZFoursquare : NSObject  {
     NSString    *clientID_;
     NSString    *callbackURL_;
+    NSString    *clientSecret_;
     NSString    *version_;
     NSString    *locale_;
     id<BZFoursquareSessionDelegate> sessionDelegate_;
@@ -38,6 +39,7 @@
 }
 @property(nonatomic,copy,readonly) NSString *clientID;
 @property(nonatomic,copy,readonly) NSString *callbackURL;
+@property(nonatomic,copy) NSString *clientSecret; // for userless access
 @property(nonatomic,copy) NSString *version; // YYYYMMDD
 @property(nonatomic,copy) NSString *locale;  // en (default), fr, de, it, etc.
 @property(nonatomic,assign) id<BZFoursquareSessionDelegate> sessionDelegate;
@@ -51,6 +53,7 @@
 - (BOOL)isSessionValid;
 
 - (BZFoursquareRequest *)requestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters delegate:(id<BZFoursquareRequestDelegate>)delegate;
+- (BZFoursquareRequest *)userlessRequestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters delegate:(id<BZFoursquareRequestDelegate>)delegate;
 
 @end
 
