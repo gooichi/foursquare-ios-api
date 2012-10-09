@@ -45,6 +45,7 @@
 
 @synthesize clientID = clientID_;
 @synthesize callbackURL = callbackURL_;
+@synthesize clientSecret = clientSecret_;
 @synthesize version = version_;
 @synthesize locale = locale_;
 @synthesize sessionDelegate = sessionDelegate_;
@@ -67,6 +68,7 @@
 - (void)dealloc {
     self.clientID = nil;
     self.callbackURL = nil;
+    self.clientSecret = nil;
     self.version = nil;
     self.locale = nil;
     self.sessionDelegate = nil;
@@ -136,6 +138,21 @@
     NSMutableDictionary *mDict = [NSMutableDictionary dictionaryWithDictionary:parameters];
     if ([self isSessionValid]) {
         [mDict setObject:accessToken_ forKey:@"oauth_token"];
+    }
+    if (version_) {
+        [mDict setObject:version_ forKey:@"v"];
+    }
+    if (locale_) {
+        [mDict setObject:locale_ forKey:@"locale"];
+    }
+    return [[[BZFoursquareRequest alloc] initWithPath:path HTTPMethod:HTTPMethod parameters:mDict delegate:delegate] autorelease];
+}
+
+- (BZFoursquareRequest *)userlessRequestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters delegate:(id<BZFoursquareRequestDelegate>)delegate {
+    NSMutableDictionary *mDict = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    [mDict setObject:clientID_ forKey:@"client_id"];
+    if (clientSecret_) {
+        [mDict setObject:clientSecret_ forKey:@"client_secret"];
     }
     if (version_) {
         [mDict setObject:version_ forKey:@"v"];
