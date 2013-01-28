@@ -101,7 +101,7 @@
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
-    if (![[url absoluteString] hasPrefix:callbackURL_]) {
+    if ([[url absoluteString] rangeOfString:callbackURL_ options:NSCaseInsensitiveSearch].location == NSNotFound) {
         return NO;
     }
     NSString *fragment = [url fragment];
