@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2013 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -171,7 +171,11 @@ static NSString * _BZGetMIMEBoundary() {
         response = [decoder objectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 #elif defined(BZ_USE_SBJSON)
         SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-        response = [parser objectWithString:responseString error:&error];
+        response = [parser objectWithString:responseString];
+        if (!response) {
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:parser.error forKey:NSLocalizedDescriptionKey];
+            error = [NSError errorWithDomain:@"org.brautaset.SBJsonParser.ErrorDomain" code:0 userInfo:userInfo];
+        }
 #else
 #error BZ_USE_* must be defined
 #endif
@@ -182,7 +186,11 @@ static NSString * _BZGetMIMEBoundary() {
     response = [decoder objectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] error:&error];
 #elif defined(BZ_USE_SBJSON)
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-    response = [parser objectWithString:responseString error:&error];
+    response = [parser objectWithString:responseString];
+    if (!response) {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:parser.error forKey:NSLocalizedDescriptionKey];
+        error = [NSError errorWithDomain:@"org.brautaset.SBJsonParser.ErrorDomain" code:0 userInfo:userInfo];
+    }
 #else
 #error BZ_USE_* must be defined
 #endif
