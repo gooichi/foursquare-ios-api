@@ -25,9 +25,9 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "BZFoursquareRequest.h"
-#if defined(BZ_USE_JSONKIT)
+#if BZ_USE_JSONKIT
 #import "JSONKit.h"
-#elif defined(BZ_USE_SBJSON)
+#elif BZ_USE_SBJSON
 #import "SBJson.h"
 #endif
 
@@ -166,10 +166,10 @@ static NSString * _BZGetMIMEBoundary() {
     if ([NSJSONSerialization class]) {
         response = [NSJSONSerialization JSONObjectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
     } else {
-#if defined(BZ_USE_JSONKIT)
+#if BZ_USE_JSONKIT
         JSONDecoder *decoder = [JSONDecoder decoder];
         response = [decoder objectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-#elif defined(BZ_USE_SBJSON)
+#elif BZ_USE_SBJSON
         SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
         response = [parser objectWithString:responseString];
         if (!response) {
@@ -181,10 +181,10 @@ static NSString * _BZGetMIMEBoundary() {
 #endif
     }
 #else
-#if defined(BZ_USE_JSONKIT)
+#if BZ_USE_JSONKIT
     JSONDecoder *decoder = [JSONDecoder decoder];
     response = [decoder objectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-#elif defined(BZ_USE_SBJSON)
+#elif BZ_USE_SBJSON
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
     response = [parser objectWithString:responseString];
     if (!response) {
