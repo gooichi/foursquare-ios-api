@@ -52,6 +52,7 @@
 - (id)initWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters delegate:(id<BZFoursquareRequestDelegate>)delegate;
 
 - (void)start;
+- (void)startWithDelegateQueue:(NSOperationQueue *)queue;
 - (void)cancel;
 
 @end

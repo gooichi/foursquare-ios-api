@@ -117,21 +117,32 @@ static NSString * _BZGetMIMEBoundary() {
 }
 
 - (void)start {
-    [self cancel];
-    self.meta = nil;
-    self.notifications = nil;
-    self.response = nil;
-    NSURLRequest *request;
-    if ([HTTPMethod_ isEqualToString:@"GET"]) {
-        request = [self requestForGETMethod];
-    } else if ([HTTPMethod_ isEqualToString:@"POST"]) {
-        request = [self requestForPOSTMethod];
-    } else {
-        NSAssert2(NO, @"*** %s: HTTP %@ method not supported", __PRETTY_FUNCTION__, HTTPMethod_);
-        request = nil;
-    }
-    self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease];
-    NSAssert1(connection_ != nil, @"*** %s: connection is nil", __PRETTY_FUNCTION__);
+  NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
+  [self startWithDelegateQueue:currentQueue];
+}
+
+- (void)startWithDelegateQueue:(NSOperationQueue *)queue {
+  [self cancel];
+  self.meta = nil;
+  self.notifications = nil;
+  self.response = nil;
+  NSURLRequest *request;
+  if ([HTTPMethod_ isEqualToString:@"GET"]) {
+    request = [self requestForGETMethod];
+  } else if ([HTTPMethod_ isEqualToString:@"POST"]) {
+    request = [self requestForPOSTMethod];
+  } else {
+    NSAssert2(NO, @"*** %s: HTTP %@ method not supported", __PRETTY_FUNCTION__, HTTPMethod_);
+    request = nil;
+  }
+  self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO] autorelease];
+  NSAssert1(connection_ != nil, @"*** %s: connection is nil", __PRETTY_FUNCTION__);
+  
+  if (queue) {
+    [self.connection setDelegateQueue:queue ?: [NSOperationQueue mainQueue]];
+  }
+  
+  [self.connection start];
 }
 
 - (void)cancel {
