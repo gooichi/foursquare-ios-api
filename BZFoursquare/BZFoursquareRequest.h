@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2013 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,6 +32,7 @@
     NSString            *HTTPMethod_;
     NSDictionary        *parameters_;
     id<BZFoursquareRequestDelegate> delegate_;
+    NSOperationQueue    *delegateQueue_;
     NSURLConnection     *connection_;
     NSMutableData       *responseData_;
     NSDictionary        *meta_;
@@ -42,6 +43,7 @@
 @property(nonatomic,copy,readonly) NSString *HTTPMethod;
 @property(nonatomic,copy,readonly) NSDictionary *parameters;
 @property(nonatomic,assign) id<BZFoursquareRequestDelegate> delegate;
+@property(nonatomic,retain) NSOperationQueue *delegateQueue __OSX_AVAILABLE_STARTING(__MAC_NA, __IPHONE_6_0);
 // responses
 @property(nonatomic,copy,readonly) NSDictionary *meta;
 @property(nonatomic,copy,readonly) NSArray *notifications;
