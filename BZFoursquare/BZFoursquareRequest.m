@@ -39,6 +39,10 @@
 #error This file does not support Objective-C Automatic Reference Counting (ARC)
 #endif
 
+#ifndef NSFoundationVersionNumber_iOS_5_1
+#define NSFoundationVersionNumber_iOS_5_1  890.1
+#endif
+
 #define kAPIv2BaseURL           @"https://api.foursquare.com/v2"
 #define kTimeoutInterval        180.0
 
@@ -78,6 +82,7 @@ static NSString * _BZGetMIMEBoundary() {
 @synthesize HTTPMethod = HTTPMethod_;
 @synthesize parameters = parameters_;
 @synthesize delegate = delegate_;
+@synthesize delegateQueue = delegateQueue_;
 @synthesize connection = connection_;
 @synthesize responseData = responseData_;
 @synthesize meta = meta_;
@@ -108,6 +113,7 @@ static NSString * _BZGetMIMEBoundary() {
     self.HTTPMethod = nil;
     self.parameters = nil;
     self.delegate = nil;
+    self.delegateQueue = nil;
     self.connection = nil;
     self.responseData = nil;
     self.meta = nil;
@@ -130,8 +136,20 @@ static NSString * _BZGetMIMEBoundary() {
         NSAssert2(NO, @"*** %s: HTTP %@ method not supported", __PRETTY_FUNCTION__, HTTPMethod_);
         request = nil;
     }
-    self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease];
+    self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO] autorelease];
     NSAssert1(connection_ != nil, @"*** %s: connection is nil", __PRETTY_FUNCTION__);
+    if (delegateQueue_) {
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
+            // 5.1.x or earlier
+            // Note: NSURLConnection setDelegateQueue is broken on iOS 5.x.
+            // See http://openradar.appspot.com/10529053.
+            NSAssert1(NO, @"*** %s: a delegate queue is not supported on pre-iOS 6.0", __PRETTY_FUNCTION__);
+        } else {
+            // 6.0 or later
+            [connection_ setDelegateQueue:delegateQueue_];
+        }
+    }
+    [connection_ start];
 }
 
 - (void)cancel {
