@@ -39,10 +39,6 @@
 #error This file does not support Objective-C Automatic Reference Counting (ARC)
 #endif
 
-#ifndef NSFoundationVersionNumber_iOS_5_1
-#define NSFoundationVersionNumber_iOS_5_1  890.1
-#endif
-
 #define kAPIv2BaseURL           @"https://api.foursquare.com/v2"
 #define kTimeoutInterval        180.0
 
@@ -72,6 +68,8 @@ static NSString * _BZGetMIMEBoundary() {
 @property(nonatomic,copy,readwrite) NSDictionary *meta;
 @property(nonatomic,copy,readwrite) NSArray *notifications;
 @property(nonatomic,copy,readwrite) NSDictionary *response;
+- (NSOperationQueue *)_delegateQueue;
+- (void)_setDelegateQueue:(NSOperationQueue *)delegateQueue;
 - (NSURLRequest *)requestForGETMethod;
 - (NSURLRequest *)requestForPOSTMethod;
 @end
@@ -82,7 +80,6 @@ static NSString * _BZGetMIMEBoundary() {
 @synthesize HTTPMethod = HTTPMethod_;
 @synthesize parameters = parameters_;
 @synthesize delegate = delegate_;
-@synthesize delegateQueue = delegateQueue_;
 @synthesize connection = connection_;
 @synthesize responseData = responseData_;
 @synthesize meta = meta_;
@@ -113,13 +110,38 @@ static NSString * _BZGetMIMEBoundary() {
     self.HTTPMethod = nil;
     self.parameters = nil;
     self.delegate = nil;
-    self.delegateQueue = nil;
+    [self _setDelegateQueue:nil];
     self.connection = nil;
     self.responseData = nil;
     self.meta = nil;
     self.notifications = nil;
     self.response = nil;
     [super dealloc];
+}
+
+- (NSOperationQueue *)delegateQueue {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
+        // 5.1.x or earlier
+        // Note: NSURLConnection setDelegateQueue is broken on iOS 5.x.
+        // See http://openradar.appspot.com/10529053.
+        [self doesNotRecognizeSelector:_cmd];
+        return nil;
+    } else {
+        // 6.0 or later
+        return [self _delegateQueue];
+    }
+}
+
+- (void)setDelegateQueue:(NSOperationQueue *)delegateQueue {
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
+        // 5.1.x or earlier
+        // Note: NSURLConnection setDelegateQueue is broken on iOS 5.x.
+        // See http://openradar.appspot.com/10529053.
+        [self doesNotRecognizeSelector:_cmd];
+    } else {
+        // 6.0 or later
+        [self _setDelegateQueue:delegateQueue];
+    }
 }
 
 - (void)start {
@@ -139,15 +161,7 @@ static NSString * _BZGetMIMEBoundary() {
     self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO] autorelease];
     NSAssert1(connection_ != nil, @"*** %s: connection is nil", __PRETTY_FUNCTION__);
     if (delegateQueue_) {
-        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
-            // 5.1.x or earlier
-            // Note: NSURLConnection setDelegateQueue is broken on iOS 5.x.
-            // See http://openradar.appspot.com/10529053.
-            NSAssert1(NO, @"*** %s: a delegate queue is not supported on pre-iOS 6.0", __PRETTY_FUNCTION__);
-        } else {
-            // 6.0 or later
-            [connection_ setDelegateQueue:delegateQueue_];
-        }
+        [connection_ setDelegateQueue:delegateQueue_];
     }
     [connection_ start];
 }
@@ -247,6 +261,17 @@ bye:
 
 #pragma mark -
 #pragma mark Anonymous category
+
+- (NSOperationQueue *)_delegateQueue {
+    return delegateQueue_;
+}
+
+- (void)_setDelegateQueue:(NSOperationQueue *)delegateQueue {
+    if (delegateQueue_ != delegateQueue) {
+        [delegateQueue_ release];
+        delegateQueue_ = [delegateQueue retain];
+    }
+}
 
 - (NSURLRequest *)requestForGETMethod {
     NSMutableArray *pairs = [NSMutableArray array];
