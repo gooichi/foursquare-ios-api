@@ -32,13 +32,15 @@
 
 - (void)testDelegateQueue {
     BZFoursquareRequest *request = [[BZFoursquareRequest alloc] initWithPath:@"venues/search" HTTPMethod:@"GET" parameters:@{@"ll": @"40.7,-74"} delegate:self];
-    request.delegateQueue = [[NSOperationQueue alloc] init];
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
-        STAssertThrows([request start], @"");
+        STAssertThrows(request.delegateQueue = [[NSOperationQueue alloc] init], @"");
     } else {
+        STAssertNoThrow(request.delegateQueue = [[NSOperationQueue alloc] init], @"");
         self.lock = [[NSConditionLock alloc] initWithCondition:0];
-        STAssertNoThrow([request start], @"");
+        [request start];
         [self.lock lockWhenCondition:1];
+        [self.lock unlock];
+        self.lock = nil;
     }
 }
 

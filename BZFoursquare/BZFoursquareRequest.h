@@ -43,7 +43,7 @@
 @property(nonatomic,copy,readonly) NSString *HTTPMethod;
 @property(nonatomic,copy,readonly) NSDictionary *parameters;
 @property(nonatomic,assign) id<BZFoursquareRequestDelegate> delegate;
-@property(nonatomic,retain) NSOperationQueue *delegateQueue __OSX_AVAILABLE_STARTING(__MAC_NA, __IPHONE_6_0);
+@property(nonatomic,retain) NSOperationQueue *delegateQueue NS_AVAILABLE(NA, 6_0);
 // responses
 @property(nonatomic,copy,readonly) NSDictionary *meta;
 @property(nonatomic,copy,readonly) NSArray *notifications;
