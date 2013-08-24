@@ -52,7 +52,9 @@ static NSString * _BZGetMIMETypeFromFilename(NSString *filename) {
 
 static NSString * _BZGetMIMEBoundary() {
     NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+    [formatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease]];
     [formatter setDateFormat:@"yyyyMMddHHmmss"];
+    [formatter setCalendar:[[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease]];
     NSDate *date = [NSDate date];
     NSTimeInterval ti = [date timeIntervalSinceReferenceDate];
     NSInteger microSec = floor((ti - floor(ti)) * 1000000.0);
