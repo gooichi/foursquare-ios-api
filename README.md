@@ -11,6 +11,10 @@ A simple Objective-C wrapper for the foursquare API v2. It allows you to integra
 
 ## Requirements
 
+* Xcode 4.5 or later
+* Base SDK: iOS 6.0 or later
+* Deployment Target: iOS 4.3 or later
+
 This library requires your app to link against the following frameworks:
 
 * Foundation.framework
@@ -64,7 +68,7 @@ If your deployment target is set to iOS 4.3 or earlier, one of the following JSO
 
 This library comes with FSQDemo app that demonstrates authorization, making API calls to guide you in development.
 
-To build and run FSQDemo app, open the FSQDemo project with Xcode 4.2 or later and set `FOURSQURE_CLIENT_ID` to your client ID.
+To build and run FSQDemo app, open the FSQDemo project with Xcode 4.5 or later and set `FOURSQURE_CLIENT_ID` to your client ID.
 
 ![FOURSQURE\_CLIENT\_ID](https://github.com/baztokyo/foursquare-ios-api/raw/master/images/foursquare_client_id.png "FOURSQURE_CLIENT_ID")
 
