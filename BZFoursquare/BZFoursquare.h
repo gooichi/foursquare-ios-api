@@ -23,27 +23,23 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
 #import "BZFoursquareRequest.h"
+#import "BZFoursquareResponse.h"
 
 @protocol BZFoursquareSessionDelegate;
 
-@interface BZFoursquare : NSObject  {
-    NSString    *clientID_;
-    NSString    *callbackURL_;
-    NSString    *clientSecret_;
-    NSString    *version_;
-    NSString    *locale_;
-    id<BZFoursquareSessionDelegate> sessionDelegate_;
-    NSString    *accessToken_;
-}
+typedef void(^ResponseHandler)(NSError *, BZFoursquareResponse *);
+
+@interface BZFoursquare : NSObject
 @property(nonatomic,copy,readonly) NSString *clientID;
 @property(nonatomic,copy,readonly) NSString *callbackURL;
 @property(nonatomic,copy) NSString *clientSecret; // for userless access
 @property(nonatomic,copy) NSString *version; // YYYYMMDD
 @property(nonatomic,copy) NSString *locale;  // en (default), fr, de, it, etc.
-@property(nonatomic,assign) id<BZFoursquareSessionDelegate> sessionDelegate;
+@property(nonatomic,weak) id<BZFoursquareSessionDelegate> sessionDelegate;
 @property(nonatomic,copy) NSString *accessToken;
+
+@property (strong, nonatomic, readonly) NSOperationQueue *requestQueue;
 
 - (id)initWithClientID:(NSString *)clientID callbackURL:(NSString *)callbackURL;
 
@@ -52,8 +48,8 @@
 - (void)invalidateSession;
 - (BOOL)isSessionValid;
 
-- (BZFoursquareRequest *)requestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters delegate:(id<BZFoursquareRequestDelegate>)delegate;
-- (BZFoursquareRequest *)userlessRequestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters delegate:(id<BZFoursquareRequestDelegate>)delegate;
+- (BZFoursquareRequest *)requestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters completionHandler:(ResponseHandler)handler;
+- (BZFoursquareRequest *)userlessRequestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters completionHandler:(ResponseHandler)handler;
 
 @end
 

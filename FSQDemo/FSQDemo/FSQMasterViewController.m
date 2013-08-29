@@ -31,13 +31,9 @@
 
 @interface FSQMasterViewController ()
 @property(nonatomic,readwrite,strong) BZFoursquare *foursquare;
-@property(nonatomic,strong) BZFoursquareRequest *request;
-@property(nonatomic,copy) NSDictionary *meta;
-@property(nonatomic,copy) NSArray *notifications;
-@property(nonatomic,copy) NSDictionary *response;
+@property(nonatomic,strong) BZFoursquareResponse *response;
+
 - (void)updateView;
-- (void)cancelRequest;
-- (void)prepareForRequest;
 - (void)searchVenues;
 - (void)checkin;
 - (void)addPhoto;
@@ -72,10 +68,6 @@ enum {
 @implementation FSQMasterViewController
 
 @synthesize foursquare = foursquare_;
-@synthesize request = request_;
-@synthesize meta = meta_;
-@synthesize notifications = notifications_;
-@synthesize response = response_;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -86,11 +78,6 @@ enum {
         foursquare_.sessionDelegate = self;
     }
     return self;
-}
-
-- (void)dealloc {
-    foursquare_.sessionDelegate = nil;
-    [self cancelRequest];
 }
 
 #pragma mark -
@@ -113,13 +100,13 @@ enum {
             id collection = nil;
             switch (indexPath.row) {
             case kMetaRow:
-                collection = meta_;
+                collection = self.response.meta;
                 break;
             case kNotificationsRow:
-                collection = notifications_;
+                collection = self.response.notifications;
                 break;
             case kResponseRow:
-                collection = response_;
+                collection = self.response.response;
                 break;
             }
             if (!collection) {
@@ -179,13 +166,13 @@ enum {
             id JSONObject = nil;
             switch (indexPath.row) {
             case kMetaRow:
-                JSONObject = meta_;
+                JSONObject = self.response.meta;
                 break;
             case kNotificationsRow:
-                JSONObject = notifications_;
+                JSONObject = self.response.notifications;
                 break;
             case kResponseRow:
-                JSONObject = response_;
+                JSONObject = self.response.response;
                 break;
             }
             FSQJSONObjectViewController *JSONObjectViewController = [[FSQJSONObjectViewController alloc] initWithJSONObject:JSONObject];
@@ -195,30 +182,6 @@ enum {
         }
         break;
     }
-}
-
-#pragma mark -
-#pragma mark BZFoursquareRequestDelegate
-
-- (void)requestDidFinishLoading:(BZFoursquareRequest *)request {
-    self.meta = request.meta;
-    self.notifications = request.notifications;
-    self.response = request.response;
-    self.request = nil;
-    [self updateView];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-}
-
-- (void)request:(BZFoursquareRequest *)request didFailWithError:(NSError *)error {
-    NSLog(@"%s: %@", __PRETTY_FUNCTION__, error);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[[error userInfo] objectForKey:@"errorDetail"] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-    [alertView show];
-    self.meta = request.meta;
-    self.notifications = request.notifications;
-    self.response = request.response;
-    self.request = nil;
-    [self updateView];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 #pragma mark -
@@ -237,59 +200,68 @@ enum {
 #pragma mark -
 #pragma mark Anonymous category
 
+- (void)showErrorAlertWithMessage:(NSString *)message {
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Foursquare error" message:message delegate:nil cancelButtonTitle:@"Ok :(" otherButtonTitles:nil];
+	[alert show];
+}
+
 - (void)updateView {
     if ([self isViewLoaded]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         [self.tableView reloadData];
+		
+		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         if (indexPath) {
             [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         }
     }
 }
 
-- (void)cancelRequest {
-    if (request_) {
-        request_.delegate = nil;
-        [request_ cancel];
-        self.request = nil;
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    }
-}
-
-- (void)prepareForRequest {
-    [self cancelRequest];
-    self.meta = nil;
-    self.notifications = nil;
-    self.response = nil;
-}
-
 - (void)searchVenues {
-    [self prepareForRequest];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"40.7,-74", @"ll", nil];
-    self.request = [foursquare_ requestWithPath:@"venues/search" HTTPMethod:@"GET" parameters:parameters delegate:self];
-    [request_ start];
+	
+	[foursquare_ requestWithPath:@"venues/search" HTTPMethod:@"GET" parameters:parameters completionHandler:^(NSError *err, BZFoursquareResponse *response) {
+		[self handlerResponse:response error:err];
+	}];
+	
     [self updateView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)checkin {
-    [self prepareForRequest];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"4d341a00306160fcf0fc6a88", @"venueId", @"public", @"broadcast", nil];
-    self.request = [foursquare_ requestWithPath:@"checkins/add" HTTPMethod:@"POST" parameters:parameters delegate:self];
-    [request_ start];
+	
+	[foursquare_ requestWithPath:@"checkins/add" HTTPMethod:@"POST" parameters:parameters completionHandler:^(NSError *err, BZFoursquareResponse *response) {
+		[self handlerResponse:response error:err];
+	}];
+	
     [self updateView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)addPhoto {
-    [self prepareForRequest];
     NSURL *photoURL = [[NSBundle mainBundle] URLForResource:@"TokyoBa-Z" withExtension:@"jpg"];
     NSData *photoData = [NSData dataWithContentsOfURL:photoURL];
+	
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:photoData, @"photo.jpg", @"4d341a00306160fcf0fc6a88", @"venueId", nil];
-    self.request = [foursquare_ requestWithPath:@"photos/add" HTTPMethod:@"POST" parameters:parameters delegate:self];
-    [request_ start];
+	
+	[foursquare_ requestWithPath:@"photos/add" HTTPMethod:@"POST" parameters:parameters completionHandler:^(NSError *err, BZFoursquareResponse *response) {
+		[self handlerResponse:response error:err];
+	}];
+	
     [self updateView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+- (void)handlerResponse:(BZFoursquareResponse *)response error:(NSError *)err {
+	if (err) {
+		[self showErrorAlertWithMessage:err.localizedDescription];
+		return;
+	}
+	
+	self.response = response;
+	
+	[self updateView];
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 @end

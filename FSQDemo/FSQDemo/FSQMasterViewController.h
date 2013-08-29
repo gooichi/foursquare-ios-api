@@ -26,12 +26,8 @@
 #import <UIKit/UIKit.h>
 #import "BZFoursquare.h"
 
-@interface FSQMasterViewController : UITableViewController <BZFoursquareRequestDelegate, BZFoursquareSessionDelegate> {
+@interface FSQMasterViewController : UITableViewController <BZFoursquareSessionDelegate> {
     BZFoursquare        *foursquare_;
-    BZFoursquareRequest *request_;
-    NSDictionary        *meta_;
-    NSArray             *notifications_;
-    NSDictionary        *response_;
 }
 @property(nonatomic,readonly,strong) BZFoursquare *foursquare;
 
