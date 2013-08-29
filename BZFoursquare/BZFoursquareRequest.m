@@ -31,30 +31,22 @@
 #import "SBJson.h"
 #endif
 
-#ifndef __has_feature
-#define __has_feature(x) 0
-#endif
-
-#if __has_feature(objc_arc)
-#error This file does not support Objective-C Automatic Reference Counting (ARC)
-#endif
-
 #define kAPIv2BaseURL           @"https://api.foursquare.com/v2"
 #define kTimeoutInterval        180.0
 
 static NSString * _BZGetMIMETypeFromFilename(NSString *filename) {
     NSString *pathExtension = [filename pathExtension];
-    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef)pathExtension, NULL);
-    CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
+    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)pathExtension, NULL);
+    NSString *MIMEType = (__bridge NSString *)(UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType));
     CFRelease(UTI);
-    return [NSMakeCollectable(MIMEType) autorelease];
+    return MIMEType;
 }
 
 static NSString * _BZGetMIMEBoundary() {
-    NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
-    [formatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease]];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     [formatter setDateFormat:@"yyyyMMddHHmmss"];
-    [formatter setCalendar:[[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease]];
+    [formatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
     NSDate *date = [NSDate date];
     NSTimeInterval ti = [date timeIntervalSinceReferenceDate];
     NSInteger microSec = floor((ti - floor(ti)) * 1000000.0);
@@ -65,8 +57,8 @@ static NSString * _BZGetMIMEBoundary() {
 @property(nonatomic,copy,readwrite) NSString *path;
 @property(nonatomic,copy,readwrite) NSString *HTTPMethod;
 @property(nonatomic,copy,readwrite) NSDictionary *parameters;
-@property(nonatomic,retain) NSURLConnection *connection;
-@property(nonatomic,retain) NSMutableData *responseData;
+@property(nonatomic,strong) NSURLConnection *connection;
+@property(nonatomic,strong) NSMutableData *responseData;
 @property(nonatomic,copy,readwrite) NSDictionary *meta;
 @property(nonatomic,copy,readwrite) NSArray *notifications;
 @property(nonatomic,copy,readwrite) NSDictionary *response;
@@ -81,7 +73,6 @@ static NSString * _BZGetMIMEBoundary() {
 @synthesize path = path_;
 @synthesize HTTPMethod = HTTPMethod_;
 @synthesize parameters = parameters_;
-@synthesize delegate = delegate_;
 @synthesize connection = connection_;
 @synthesize responseData = responseData_;
 @synthesize meta = meta_;
@@ -108,17 +99,8 @@ static NSString * _BZGetMIMEBoundary() {
 }
 
 - (void)dealloc {
-    self.path = nil;
-    self.HTTPMethod = nil;
-    self.parameters = nil;
     self.delegate = nil;
     [self _setDelegateQueue:nil];
-    self.connection = nil;
-    self.responseData = nil;
-    self.meta = nil;
-    self.notifications = nil;
-    self.response = nil;
-    [super dealloc];
 }
 
 - (NSOperationQueue *)delegateQueue {
@@ -160,7 +142,7 @@ static NSString * _BZGetMIMEBoundary() {
         NSAssert2(NO, @"*** %s: HTTP %@ method not supported", __PRETTY_FUNCTION__, HTTPMethod_);
         request = nil;
     }
-    self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO] autorelease];
+    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
     NSAssert1(connection_ != nil, @"*** %s: connection is nil", __PRETTY_FUNCTION__);
     if (delegateQueue_) {
         [connection_ setDelegateQueue:delegateQueue_];
@@ -181,8 +163,8 @@ static NSString * _BZGetMIMEBoundary() {
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     self.responseData = [NSMutableData data];
-    if ([delegate_ respondsToSelector:@selector(requestDidStartLoading:)]) {
-        [delegate_ requestDidStartLoading:self];
+    if ([self.delegate respondsToSelector:@selector(requestDidStartLoading:)]) {
+        [self.delegate requestDidStartLoading:self];
     }
 }
 
@@ -191,7 +173,7 @@ static NSString * _BZGetMIMEBoundary() {
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSString *responseString = [[[NSString alloc] initWithData:responseData_ encoding:NSUTF8StringEncoding] autorelease];
+    NSString *responseString = [[NSString alloc] initWithData:responseData_ encoding:NSUTF8StringEncoding];
     NSDictionary *response;
     NSError *error = nil;
 #if defined(__IPHONE_5_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
@@ -241,12 +223,12 @@ static NSString * _BZGetMIMEBoundary() {
     }
 bye:
     if (error) {
-        if ([delegate_ respondsToSelector:@selector(request:didFailWithError:)]) {
-            [delegate_ request:self didFailWithError:error];
+        if ([self.delegate respondsToSelector:@selector(request:didFailWithError:)]) {
+            [self.delegate request:self didFailWithError:error];
         }
     } else {
-        if ([delegate_ respondsToSelector:@selector(requestDidFinishLoading:)]) {
-            [delegate_ requestDidFinishLoading:self];
+        if ([self.delegate respondsToSelector:@selector(requestDidFinishLoading:)]) {
+            [self.delegate requestDidFinishLoading:self];
         }
     }
     self.connection = nil;
@@ -254,8 +236,8 @@ bye:
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    if ([delegate_ respondsToSelector:@selector(request:didFailWithError:)]) {
-        [delegate_ request:self didFailWithError:error];
+    if ([self.delegate respondsToSelector:@selector(request:didFailWithError:)]) {
+        [self.delegate request:self didFailWithError:error];
     }
     self.connection = nil;
     self.responseData = nil;
@@ -270,8 +252,7 @@ bye:
 
 - (void)_setDelegateQueue:(NSOperationQueue *)delegateQueue {
     if (delegateQueue_ != delegateQueue) {
-        [delegateQueue_ release];
-        delegateQueue_ = [delegateQueue retain];
+        delegateQueue_ = delegateQueue;
     }
 }
 
@@ -286,15 +267,14 @@ bye:
                 continue;
             }
         }
-        CFStringRef escapedValue = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)value, NULL, CFSTR("%:/?#[]@!$&'()*+,;="), kCFStringEncodingUTF8);
-        NSMutableString *pair = [[key mutableCopy] autorelease];
+        NSString *escapedValue = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)value, NULL, CFSTR("%:/?#[]@!$&'()*+,;="), kCFStringEncodingUTF8));
+        NSMutableString *pair = [key mutableCopy];
         [pair appendString:@"="];
-        [pair appendString:(NSString *)escapedValue];
+        [pair appendString:escapedValue];
         [pairs addObject:pair];
-        CFRelease(escapedValue);
     }
     NSString *URLString = [kAPIv2BaseURL stringByAppendingPathComponent:path_];
-    NSMutableString *mURLString = [[URLString mutableCopy] autorelease];
+    NSMutableString *mURLString = [URLString mutableCopy];
     [mURLString appendString:@"?"];
     [mURLString appendString:[pairs componentsJoinedByString:@"&"]];
     NSURL *URL = [NSURL URLWithString:mURLString];

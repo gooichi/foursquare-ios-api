@@ -31,7 +31,6 @@
     NSString            *path_;
     NSString            *HTTPMethod_;
     NSDictionary        *parameters_;
-    id<BZFoursquareRequestDelegate> delegate_;
     NSOperationQueue    *delegateQueue_;
     NSURLConnection     *connection_;
     NSMutableData       *responseData_;
@@ -42,8 +41,8 @@
 @property(nonatomic,copy,readonly) NSString *path;
 @property(nonatomic,copy,readonly) NSString *HTTPMethod;
 @property(nonatomic,copy,readonly) NSDictionary *parameters;
-@property(nonatomic,assign) id<BZFoursquareRequestDelegate> delegate;
-@property(nonatomic,retain) NSOperationQueue *delegateQueue NS_AVAILABLE(NA, 6_0);
+@property(nonatomic,weak) id<BZFoursquareRequestDelegate> delegate;
+@property(nonatomic,strong) NSOperationQueue *delegateQueue NS_AVAILABLE(NA, 6_0);
 // responses
 @property(nonatomic,copy,readonly) NSDictionary *meta;
 @property(nonatomic,copy,readonly) NSArray *notifications;

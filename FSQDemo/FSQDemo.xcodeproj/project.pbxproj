@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18A3381F17CF644D0017901B /* BZFoursquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDE814614E8600320FF0 /* BZFoursquare.m */; };
+		18A3382017CF64500017901B /* BZFoursquareRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */; };
+		18A3382117CF64530017901B /* BZFoursquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDE814614E8600320FF0 /* BZFoursquare.m */; };
 		674BDDA01460CE0200320FF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDD9F1460CE0200320FF0 /* UIKit.framework */; };
 		674BDDA21460CE0200320FF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDA11460CE0200320FF0 /* Foundation.framework */; };
 		674BDDA41460CE0200320FF0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDA31460CE0200320FF0 /* CoreGraphics.framework */; };
@@ -15,8 +18,6 @@
 		674BDDB01460CE0200320FF0 /* FSQAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDAF1460CE0200320FF0 /* FSQAppDelegate.m */; };
 		674BDDB31460CE0200320FF0 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 674BDDB11460CE0200320FF0 /* MainStoryboard.storyboard */; };
 		674BDDB61460CE0200320FF0 /* FSQMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDB51460CE0200320FF0 /* FSQMasterViewController.m */; settings = {COMPILER_FLAGS = "-D'FOURSQUARE_CLIENT_ID=@\"$(FOURSQUARE_CLIENT_ID)\"' -D'FOURSQUARE_CALLBACK_URL=@\"$(FOURSQUARE_CALLBACK_URL)\"'"; }; };
-		674BDDEB14614E8600320FF0 /* BZFoursquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDE814614E8600320FF0 /* BZFoursquare.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		674BDDEC14614E8600320FF0 /* BZFoursquareRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		674BDDEF14614ED500320FF0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */; };
 		67E255A21461781B00FE88BD /* TokyoBa-Z.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 67E255A11461781B00FE88BD /* TokyoBa-Z.jpg */; };
 		D720935617BA3F43000FB828 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D720935517BA3F43000FB828 /* SenTestingKit.framework */; };
@@ -304,12 +305,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				674BDDEB14614E8600320FF0 /* BZFoursquare.m in Sources */,
-				674BDDEC14614E8600320FF0 /* BZFoursquareRequest.m in Sources */,
 				674BDDB01460CE0200320FF0 /* FSQAppDelegate.m in Sources */,
 				D7F848101462649800C0ACDD /* FSQJSONObjectViewController.m in Sources */,
 				674BDDB61460CE0200320FF0 /* FSQMasterViewController.m in Sources */,
 				674BDDAC1460CE0200320FF0 /* main.m in Sources */,
+				18A3381F17CF644D0017901B /* BZFoursquare.m in Sources */,
+				18A3382017CF64500017901B /* BZFoursquareRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +320,7 @@
 			files = (
 				D720936117BA3F43000FB828 /* BZFoursquareLogicTests.m in Sources */,
 				D720936917BA4816000FB828 /* BZFoursquareRequest.m in Sources */,
+				18A3382117CF64530017901B /* BZFoursquare.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +412,7 @@
 		674BDDBD1460CE0200320FF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FOURSQUARE_CALLBACK_URL = "fsqdemo://foursquare";
 				FOURSQUARE_CLIENT_ID = YOUR_CLIENT_ID;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -423,6 +426,7 @@
 		674BDDBE1460CE0200320FF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FOURSQUARE_CALLBACK_URL = "fsqdemo://foursquare";
 				FOURSQUARE_CLIENT_ID = YOUR_CLIENT_ID;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

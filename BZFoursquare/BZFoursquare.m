@@ -26,14 +26,6 @@
 #import <UIKit/UIKit.h>
 #import "BZFoursquare.h"
 
-#ifndef __has_feature
-#define __has_feature(x) 0
-#endif
-
-#if __has_feature(objc_arc)
-#error This file does not support Objective-C Automatic Reference Counting (ARC)
-#endif
-
 #define kAuthorizeBaseURL       @"https://foursquare.com/oauth2/authorize"
 
 @interface BZFoursquare ()
@@ -48,7 +40,6 @@
 @synthesize clientSecret = clientSecret_;
 @synthesize version = version_;
 @synthesize locale = locale_;
-@synthesize sessionDelegate = sessionDelegate_;
 @synthesize accessToken = accessToken_;
 
 - (id)init {
@@ -66,30 +57,24 @@
 }
 
 - (void)dealloc {
-    self.clientID = nil;
-    self.callbackURL = nil;
-    self.clientSecret = nil;
-    self.version = nil;
-    self.locale = nil;
     self.sessionDelegate = nil;
-    self.accessToken = nil;
-    [super dealloc];
 }
 
 - (BOOL)startAuthorization {
     NSMutableArray *pairs = [NSMutableArray array];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:clientID_, @"client_id", @"token", @"response_type", callbackURL_, @"redirect_uri", nil];
+	
     for (NSString *key in parameters) {
         NSString *value = [parameters objectForKey:key];
-        CFStringRef escapedValue = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)value, NULL, CFSTR("%:/?#[]@!$&'()*+,;="), kCFStringEncodingUTF8);
-        NSMutableString *pair = [[key mutableCopy] autorelease];
+        NSString *escapedValue = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)value, NULL, CFSTR("%:/?#[]@!$&'()*+,;="), kCFStringEncodingUTF8));
+		
+        NSMutableString *pair = [key mutableCopy];
         [pair appendString:@"="];
-        [pair appendString:(NSString *)escapedValue];
+        [pair appendString:escapedValue];
         [pairs addObject:pair];
-        CFRelease(escapedValue);
     }
     NSString *URLString = kAuthorizeBaseURL;
-    NSMutableString *mURLString = [[URLString mutableCopy] autorelease];
+    NSMutableString *mURLString = [URLString mutableCopy];
     [mURLString appendString:@"?"];
     [mURLString appendString:[pairs componentsJoinedByString:@"&"]];
     NSURL *URL = [NSURL URLWithString:mURLString];
@@ -115,12 +100,12 @@
     }
     self.accessToken = [parameters objectForKey:@"access_token"];
     if (accessToken_) {
-        if ([sessionDelegate_ respondsToSelector:@selector(foursquareDidAuthorize:)]) {
-            [sessionDelegate_ foursquareDidAuthorize:self];
+        if ([self.sessionDelegate respondsToSelector:@selector(foursquareDidAuthorize:)]) {
+            [self.sessionDelegate foursquareDidAuthorize:self];
         }
     } else {
-        if ([sessionDelegate_ respondsToSelector:@selector(foursquareDidNotAuthorize:error:)]) {
-            [sessionDelegate_ foursquareDidNotAuthorize:self error:parameters];
+        if ([self.sessionDelegate respondsToSelector:@selector(foursquareDidNotAuthorize:error:)]) {
+            [self.sessionDelegate foursquareDidNotAuthorize:self error:parameters];
         }
     }
     return YES;
@@ -145,7 +130,7 @@
     if (locale_) {
         [mDict setObject:locale_ forKey:@"locale"];
     }
-    return [[[BZFoursquareRequest alloc] initWithPath:path HTTPMethod:HTTPMethod parameters:mDict delegate:delegate] autorelease];
+    return [[BZFoursquareRequest alloc] initWithPath:path HTTPMethod:HTTPMethod parameters:mDict delegate:delegate];
 }
 
 - (BZFoursquareRequest *)userlessRequestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters delegate:(id<BZFoursquareRequestDelegate>)delegate {
@@ -160,7 +145,7 @@
     if (locale_) {
         [mDict setObject:locale_ forKey:@"locale"];
     }
-    return [[[BZFoursquareRequest alloc] initWithPath:path HTTPMethod:HTTPMethod parameters:mDict delegate:delegate] autorelease];
+    return [[BZFoursquareRequest alloc] initWithPath:path HTTPMethod:HTTPMethod parameters:mDict delegate:delegate];
 }
 
 @end

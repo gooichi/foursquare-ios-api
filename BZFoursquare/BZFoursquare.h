@@ -34,7 +34,6 @@
     NSString    *clientSecret_;
     NSString    *version_;
     NSString    *locale_;
-    id<BZFoursquareSessionDelegate> sessionDelegate_;
     NSString    *accessToken_;
 }
 @property(nonatomic,copy,readonly) NSString *clientID;
@@ -42,7 +41,7 @@
 @property(nonatomic,copy) NSString *clientSecret; // for userless access
 @property(nonatomic,copy) NSString *version; // YYYYMMDD
 @property(nonatomic,copy) NSString *locale;  // en (default), fr, de, it, etc.
-@property(nonatomic,assign) id<BZFoursquareSessionDelegate> sessionDelegate;
+@property(nonatomic,weak) id<BZFoursquareSessionDelegate> sessionDelegate;
 @property(nonatomic,copy) NSString *accessToken;
 
 - (id)initWithClientID:(NSString *)clientID callbackURL:(NSString *)callbackURL;
