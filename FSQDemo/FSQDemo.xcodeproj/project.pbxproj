@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		188AC47A17CF81CC009FBD24 /* BZFoursquareResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 188AC47917CF81CC009FBD24 /* BZFoursquareResponse.m */; };
 		18A3381F17CF644D0017901B /* BZFoursquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDE814614E8600320FF0 /* BZFoursquare.m */; };
 		18A3382017CF64500017901B /* BZFoursquareRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */; };
 		18A3382117CF64530017901B /* BZFoursquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDE814614E8600320FF0 /* BZFoursquare.m */; };
@@ -34,6 +35,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		188AC47817CF81CC009FBD24 /* BZFoursquareResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BZFoursquareResponse.h; sourceTree = "<group>"; };
+		188AC47917CF81CC009FBD24 /* BZFoursquareResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BZFoursquareResponse.m; sourceTree = "<group>"; };
+		188AC47E17CF8443009FBD24 /* BZFoursquareResponse+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BZFoursquareResponse+Private.h"; sourceTree = "<group>"; };
 		674BDD9B1460CE0200320FF0 /* FSQDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FSQDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		674BDD9F1460CE0200320FF0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		674BDDA11460CE0200320FF0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -159,6 +163,9 @@
 				674BDDE814614E8600320FF0 /* BZFoursquare.m */,
 				674BDDE914614E8600320FF0 /* BZFoursquareRequest.h */,
 				674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */,
+				188AC47817CF81CC009FBD24 /* BZFoursquareResponse.h */,
+				188AC47917CF81CC009FBD24 /* BZFoursquareResponse.m */,
+				188AC47E17CF8443009FBD24 /* BZFoursquareResponse+Private.h */,
 			);
 			name = BZFoursquare;
 			path = ../BZFoursquare;
@@ -311,6 +318,7 @@
 				674BDDAC1460CE0200320FF0 /* main.m in Sources */,
 				18A3381F17CF644D0017901B /* BZFoursquare.m in Sources */,
 				18A3382017CF64500017901B /* BZFoursquareRequest.m in Sources */,
+				188AC47A17CF81CC009FBD24 /* BZFoursquareResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

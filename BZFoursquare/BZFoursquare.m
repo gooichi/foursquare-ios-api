@@ -23,35 +23,28 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
 #import "BZFoursquare.h"
+#import "BZFoursquareResponse+Private.h"
 
 #define kAuthorizeBaseURL       @"https://foursquare.com/oauth2/authorize"
 
-@interface BZFoursquare ()
-@property(nonatomic,copy,readwrite) NSString *clientID;
-@property(nonatomic,copy,readwrite) NSString *callbackURL;
-@end
-
 @implementation BZFoursquare
 
-@synthesize clientID = clientID_;
-@synthesize callbackURL = callbackURL_;
-@synthesize clientSecret = clientSecret_;
-@synthesize version = version_;
-@synthesize locale = locale_;
-@synthesize accessToken = accessToken_;
-
 - (id)init {
-    return [self initWithClientID:nil callbackURL:nil];
+	self = [super init];
+	if (self) {
+		_requestQueue = NSOperationQueue.new;
+		self.requestQueue.maxConcurrentOperationCount = 1;
+	}
+	return self;
 }
 
 - (id)initWithClientID:(NSString *)clientID callbackURL:(NSString *)callbackURL {
     NSParameterAssert(clientID != nil && callbackURL != nil);
-    self = [super init];
+    self = [self init];
     if (self) {
-        self.clientID = clientID;
-        self.callbackURL = callbackURL;
+        _clientID = clientID;
+        _callbackURL = callbackURL;
     }
     return self;
 }
@@ -62,7 +55,7 @@
 
 - (BOOL)startAuthorization {
     NSMutableArray *pairs = [NSMutableArray array];
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:clientID_, @"client_id", @"token", @"response_type", callbackURL_, @"redirect_uri", nil];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:self.clientID, @"client_id", @"token", @"response_type", self.callbackURL, @"redirect_uri", nil];
 	
     for (NSString *key in parameters) {
         NSString *value = [parameters objectForKey:key];
@@ -86,7 +79,7 @@
 }
 
 - (BOOL)handleOpenURL:(NSURL *)url {
-    if (!callbackURL_ || [[url absoluteString] rangeOfString:callbackURL_ options:(NSCaseInsensitiveSearch | NSAnchoredSearch)].length == 0) {
+    if (!self.callbackURL || [[url absoluteString] rangeOfString:self.callbackURL options:(NSCaseInsensitiveSearch | NSAnchoredSearch)].length == 0) {
         return NO;
     }
     NSString *fragment = [url fragment];
@@ -98,8 +91,9 @@
         NSString *val = [[kv objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [parameters setObject:val forKey:key];
     }
+	
     self.accessToken = [parameters objectForKey:@"access_token"];
-    if (accessToken_) {
+    if (self.accessToken) {
         if ([self.sessionDelegate respondsToSelector:@selector(foursquareDidAuthorize:)]) {
             [self.sessionDelegate foursquareDidAuthorize:self];
         }
@@ -116,36 +110,82 @@
 }
 
 - (BOOL)isSessionValid {
-    return (accessToken_ != nil);
+    return (self.accessToken != nil);
 }
 
-- (BZFoursquareRequest *)requestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters delegate:(id<BZFoursquareRequestDelegate>)delegate {
+- (BZFoursquareRequest *)requestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters completionHandler:(ResponseHandler)handler {
+	
     NSMutableDictionary *mDict = [NSMutableDictionary dictionaryWithDictionary:parameters];
     if ([self isSessionValid]) {
-        [mDict setObject:accessToken_ forKey:@"oauth_token"];
+        [mDict setObject:self.accessToken forKey:@"oauth_token"];
     }
-    if (version_) {
-        [mDict setObject:version_ forKey:@"v"];
+    if (self.version) {
+        [mDict setObject:self.version forKey:@"v"];
     }
-    if (locale_) {
-        [mDict setObject:locale_ forKey:@"locale"];
+    if (self.locale) {
+        [mDict setObject:self.locale forKey:@"locale"];
     }
-    return [[BZFoursquareRequest alloc] initWithPath:path HTTPMethod:HTTPMethod parameters:mDict delegate:delegate];
+	
+	BZFoursquareRequest *request = [[BZFoursquareRequest alloc] initWithPath:path HTTPMethod:HTTPMethod parameters:mDict];
+	
+	__weak BZFoursquareRequest *localRequest = request;
+	request.completionBlock = ^{
+		[self handleResponseForRequest:localRequest clientHandler:handler];
+	};
+	
+	[self.requestQueue addOperation:request];
+	
+    return request;
 }
 
-- (BZFoursquareRequest *)userlessRequestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters delegate:(id<BZFoursquareRequestDelegate>)delegate {
+- (BZFoursquareRequest *)userlessRequestWithPath:(NSString *)path HTTPMethod:(NSString *)HTTPMethod parameters:(NSDictionary *)parameters completionHandler:(ResponseHandler)handler {
+	
     NSMutableDictionary *mDict = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    [mDict setObject:clientID_ forKey:@"client_id"];
-    if (clientSecret_) {
-        [mDict setObject:clientSecret_ forKey:@"client_secret"];
+    [mDict setObject:self.clientID forKey:@"client_id"];
+	
+    if (self.clientSecret) {
+        [mDict setObject:self.clientSecret forKey:@"client_secret"];
     }
-    if (version_) {
-        [mDict setObject:version_ forKey:@"v"];
+    if (self.version) {
+        [mDict setObject:self.version forKey:@"v"];
     }
-    if (locale_) {
-        [mDict setObject:locale_ forKey:@"locale"];
+    if (self.locale) {
+        [mDict setObject:self.locale forKey:@"locale"];
     }
-    return [[BZFoursquareRequest alloc] initWithPath:path HTTPMethod:HTTPMethod parameters:mDict delegate:delegate];
+	
+    BZFoursquareRequest *request = [[BZFoursquareRequest alloc] initWithPath:path HTTPMethod:HTTPMethod parameters:mDict];
+	
+	__weak BZFoursquareRequest *localRequest = request;
+	request.completionBlock = ^{
+		[self handleResponseForRequest:localRequest clientHandler:handler];
+	};
+	
+	[self.requestQueue addOperation:request];
+	
+	return request;
+}
+
+#pragma mark -
+#pragma mark Internal
+
+- (void)handleResponseForRequest:(BZFoursquareRequest *)request clientHandler:(ResponseHandler)handler {
+	
+	ResponseHandler notifyClient = ^(NSError *err, BZFoursquareResponse *response){
+		dispatch_async(dispatch_get_main_queue(), ^{
+			handler(err, response);
+		});
+	};
+	
+	if (request.error) {
+		notifyClient(request.error, nil);
+	} else {
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			BZFoursquareResponse *response = BZFoursquareResponse.new;
+			NSError *err = [response loadResponseData:request.responseData];
+			
+			notifyClient(err, response);
+		});
+	}
 }
 
 @end
