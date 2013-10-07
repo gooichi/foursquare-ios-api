@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2012 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2013 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -28,15 +28,8 @@
 
 @protocol BZFoursquareSessionDelegate;
 
-@interface BZFoursquare : NSObject  {
-    NSString    *clientID_;
-    NSString    *callbackURL_;
-    NSString    *clientSecret_;
-    NSString    *version_;
-    NSString    *locale_;
-    id<BZFoursquareSessionDelegate> sessionDelegate_;
-    NSString    *accessToken_;
-}
+@interface BZFoursquare : NSObject
+
 @property(nonatomic,copy,readonly) NSString *clientID;
 @property(nonatomic,copy,readonly) NSString *callbackURL;
 @property(nonatomic,copy) NSString *clientSecret; // for userless access
