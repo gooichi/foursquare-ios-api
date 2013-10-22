@@ -196,7 +196,7 @@ static NSString * _BZGetMIMEBoundary() {
         SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
         response = [parser objectWithString:responseString];
         if (!response) {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:parser.error forKey:NSLocalizedDescriptionKey];
+            NSDictionary *userInfo = @{NSLocalizedDescriptionKey: parser.error};
             error = [NSError errorWithDomain:@"org.brautaset.SBJsonParser.ErrorDomain" code:0 userInfo:userInfo];
         }
 #else
@@ -211,7 +211,7 @@ static NSString * _BZGetMIMEBoundary() {
     SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
     response = [parser objectWithString:responseString];
     if (!response) {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:parser.error forKey:NSLocalizedDescriptionKey];
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey, parser.error};
         error = [NSError errorWithDomain:@"org.brautaset.SBJsonParser.ErrorDomain" code:0 userInfo:userInfo];
     }
 #else
@@ -221,10 +221,10 @@ static NSString * _BZGetMIMEBoundary() {
     if (!response) {
         goto bye;
     }
-    self.meta = [response objectForKey:@"meta"];
-    self.notifications = [response objectForKey:@"notifications"];
-    self.response = [response objectForKey:@"response"];
-    NSInteger code = [[_meta objectForKey:@"code"] integerValue];
+    self.meta = response[@"meta"];
+    self.notifications = response[@"notifications"];
+    self.response = response[@"response"];
+    NSInteger code = [_meta[@"code"] integerValue];
     if (code / 100 != 2) {
         error = [NSError errorWithDomain:BZFoursquareErrorDomain code:code userInfo:_meta];
     }
@@ -256,7 +256,7 @@ bye:
 - (NSURLRequest *)requestForGETMethod {
     NSMutableArray *pairs = [NSMutableArray array];
     for (NSString *key in _parameters) {
-        NSString *value = [_parameters objectForKey:key];
+        NSString *value = _parameters[key];
         if (![value isKindOfClass:[NSString class]]) {
             if ([value isKindOfClass:[NSNumber class]]) {
                 value = [value description];
@@ -298,13 +298,13 @@ bye:
     NSData *dashBoundaryData = [dashBoundary dataUsingEncoding:NSUTF8StringEncoding];
     NSData *crlfData = [NSData dataWithBytes:"\r\n" length:2];
     for (NSString *key in _parameters) {
-        NSString *value = [_parameters objectForKey:key];
+        NSString *value = _parameters[key];
         if (![value isKindOfClass:[NSString class]]) {
             if ([value isKindOfClass:[NSNumber class]]) {
                 value = [value description];
             } else {
                 if ([value isKindOfClass:[NSData class]]) {
-                    [datas setObject:value forKey:key];
+                    datas[key] = value;
                 }
                 continue;
             }
@@ -347,7 +347,7 @@ bye:
         // empty line
         [body appendData:crlfData];
         // content
-        [body appendData:[datas objectForKey:key]];
+        [body appendData:datas[key]];
         // CRLF
         [body appendData:crlfData];
     }
