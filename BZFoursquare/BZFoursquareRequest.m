@@ -25,11 +25,6 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "BZFoursquareRequest.h"
-#if BZ_USE_JSONKIT
-#import "JSONKit.h"
-#elif BZ_USE_SBJSON
-#import "SBJson.h"
-#endif
 
 #ifndef __has_feature
 #define __has_feature(x) 0
@@ -181,43 +176,8 @@ static NSString * _BZGetMIMEBoundary() {
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString *responseString = [[[NSString alloc] initWithData:_responseData encoding:NSUTF8StringEncoding] autorelease];
-    NSDictionary *response;
     NSError *error = nil;
-#if defined(__IPHONE_5_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
-    response = [NSJSONSerialization JSONObjectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
-#elif defined(__IPHONE_5_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0
-    if ([NSJSONSerialization class]) {
-        response = [NSJSONSerialization JSONObjectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
-    } else {
-#if BZ_USE_JSONKIT
-        JSONDecoder *decoder = [JSONDecoder decoder];
-        response = [decoder objectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-#elif BZ_USE_SBJSON
-        SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-        response = [parser objectWithString:responseString];
-        if (!response) {
-            NSDictionary *userInfo = @{NSLocalizedDescriptionKey: parser.error};
-            error = [NSError errorWithDomain:@"org.brautaset.SBJsonParser.ErrorDomain" code:0 userInfo:userInfo];
-        }
-#else
-#error BZ_USE_* must be defined
-#endif
-    }
-#else
-#if BZ_USE_JSONKIT
-    JSONDecoder *decoder = [JSONDecoder decoder];
-    response = [decoder objectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-#elif BZ_USE_SBJSON
-    SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-    response = [parser objectWithString:responseString];
-    if (!response) {
-        NSDictionary *userInfo = @{NSLocalizedDescriptionKey, parser.error};
-        error = [NSError errorWithDomain:@"org.brautaset.SBJsonParser.ErrorDomain" code:0 userInfo:userInfo];
-    }
-#else
-#error BZ_USE_* must be defined
-#endif
-#endif
+    NSDictionary *response = [NSJSONSerialization JSONObjectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
     if (!response) {
         goto bye;
     }
