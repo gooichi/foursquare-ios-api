@@ -19,18 +19,26 @@
 		674BDDEC14614E8600320FF0 /* BZFoursquareRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		674BDDEF14614ED500320FF0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */; };
 		67E255A21461781B00FE88BD /* TokyoBa-Z.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 67E255A11461781B00FE88BD /* TokyoBa-Z.jpg */; };
-		D720935617BA3F43000FB828 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D720935517BA3F43000FB828 /* SenTestingKit.framework */; };
-		D720935717BA3F43000FB828 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDD9F1460CE0200320FF0 /* UIKit.framework */; };
-		D720935817BA3F43000FB828 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDA11460CE0200320FF0 /* Foundation.framework */; };
-		D720935E17BA3F43000FB828 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D720935C17BA3F43000FB828 /* InfoPlist.strings */; };
-		D720936117BA3F43000FB828 /* BZFoursquareLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D720936017BA3F43000FB828 /* BZFoursquareLogicTests.m */; };
-		D720936917BA4816000FB828 /* BZFoursquareRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D720936A17BA492E000FB828 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */; };
 		D732B41016075726009D8839 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D732B40F16075726009D8839 /* Default.png */; };
 		D732B41316075732009D8839 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D732B41216075732009D8839 /* Default@2x.png */; };
 		D732B4151607573A009D8839 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D732B4141607573A009D8839 /* Default-568h@2x.png */; };
+		D7A18B7D181670F400C108C1 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D720935517BA3F43000FB828 /* SenTestingKit.framework */; };
+		D7A18B7E181670F400C108C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDDA11460CE0200320FF0 /* Foundation.framework */; };
+		D7A18B7F181670F400C108C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 674BDD9F1460CE0200320FF0 /* UIKit.framework */; };
+		D7A18B85181670F400C108C1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D7A18B83181670F400C108C1 /* InfoPlist.strings */; };
+		D7A18B87181670F400C108C1 /* BZFoursquareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D7A18B86181670F400C108C1 /* BZFoursquareTests.m */; };
 		D7F848101462649800C0ACDD /* FSQJSONObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7F8480F1462649800C0ACDD /* FSQJSONObjectViewController.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D7A18B89181670F400C108C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 674BDD921460CE0100320FF0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 674BDD9A1460CE0200320FF0;
+			remoteInfo = FSQDemo;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		674BDD9B1460CE0200320FF0 /* FSQDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FSQDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,16 +60,15 @@
 		674BDDEA14614E8600320FF0 /* BZFoursquareRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BZFoursquareRequest.m; sourceTree = "<group>"; };
 		674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		67E255A11461781B00FE88BD /* TokyoBa-Z.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "TokyoBa-Z.jpg"; path = "Images/TokyoBa-Z.jpg"; sourceTree = "<group>"; };
-		D720935417BA3F43000FB828 /* BZFoursquareLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BZFoursquareLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D720935517BA3F43000FB828 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		D720935B17BA3F43000FB828 /* BZFoursquareLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BZFoursquareLogicTests-Info.plist"; sourceTree = "<group>"; };
-		D720935D17BA3F43000FB828 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D720935F17BA3F43000FB828 /* BZFoursquareLogicTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BZFoursquareLogicTests.h; sourceTree = "<group>"; };
-		D720936017BA3F43000FB828 /* BZFoursquareLogicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BZFoursquareLogicTests.m; sourceTree = "<group>"; };
-		D720936217BA3F43000FB828 /* BZFoursquareLogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BZFoursquareLogicTests-Prefix.pch"; sourceTree = "<group>"; };
 		D732B40F16075726009D8839 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
 		D732B41216075732009D8839 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
 		D732B4141607573A009D8839 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Images/Default-568h@2x.png"; sourceTree = "<group>"; };
+		D7A18B7C181670F400C108C1 /* BZFoursquareTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BZFoursquareTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7A18B82181670F400C108C1 /* BZFoursquareTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BZFoursquareTests-Info.plist"; sourceTree = "<group>"; };
+		D7A18B84181670F400C108C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D7A18B86181670F400C108C1 /* BZFoursquareTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BZFoursquareTests.m; sourceTree = "<group>"; };
+		D7A18B88181670F400C108C1 /* BZFoursquareTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BZFoursquareTests-Prefix.pch"; sourceTree = "<group>"; };
 		D7F8480E1462649800C0ACDD /* FSQJSONObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSQJSONObjectViewController.h; sourceTree = "<group>"; };
 		D7F8480F1462649800C0ACDD /* FSQJSONObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSQJSONObjectViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,14 +85,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D720935017BA3F43000FB828 /* Frameworks */ = {
+		D7A18B79181670F400C108C1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D720935817BA3F43000FB828 /* Foundation.framework in Frameworks */,
-				D720936A17BA492E000FB828 /* MobileCoreServices.framework in Frameworks */,
-				D720935617BA3F43000FB828 /* SenTestingKit.framework in Frameworks */,
-				D720935717BA3F43000FB828 /* UIKit.framework in Frameworks */,
+				D7A18B7E181670F400C108C1 /* Foundation.framework in Frameworks */,
+				D7A18B7F181670F400C108C1 /* UIKit.framework in Frameworks */,
+				D7A18B7D181670F400C108C1 /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +103,7 @@
 			children = (
 				674BDDE614614E8600320FF0 /* BZFoursquare */,
 				674BDDA51460CE0200320FF0 /* FSQDemo */,
-				D720935917BA3F43000FB828 /* BZFoursquareLogicTests */,
+				D7A18B80181670F400C108C1 /* BZFoursquareTests */,
 				674BDD9E1460CE0200320FF0 /* Frameworks */,
 				674BDD9C1460CE0200320FF0 /* Products */,
 			);
@@ -107,7 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				674BDD9B1460CE0200320FF0 /* FSQDemo.app */,
-				D720935417BA3F43000FB828 /* BZFoursquareLogicTests.octest */,
+				D7A18B7C181670F400C108C1 /* BZFoursquareTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,8 +124,8 @@
 				674BDDA31460CE0200320FF0 /* CoreGraphics.framework */,
 				674BDDA11460CE0200320FF0 /* Foundation.framework */,
 				674BDDEE14614ED500320FF0 /* MobileCoreServices.framework */,
-				674BDD9F1460CE0200320FF0 /* UIKit.framework */,
 				D720935517BA3F43000FB828 /* SenTestingKit.framework */,
+				674BDD9F1460CE0200320FF0 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -174,22 +180,21 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		D720935917BA3F43000FB828 /* BZFoursquareLogicTests */ = {
+		D7A18B80181670F400C108C1 /* BZFoursquareTests */ = {
 			isa = PBXGroup;
 			children = (
-				D720935F17BA3F43000FB828 /* BZFoursquareLogicTests.h */,
-				D720936017BA3F43000FB828 /* BZFoursquareLogicTests.m */,
-				D720935A17BA3F43000FB828 /* Supporting Files */,
+				D7A18B86181670F400C108C1 /* BZFoursquareTests.m */,
+				D7A18B81181670F400C108C1 /* Supporting Files */,
 			);
-			path = BZFoursquareLogicTests;
+			path = BZFoursquareTests;
 			sourceTree = "<group>";
 		};
-		D720935A17BA3F43000FB828 /* Supporting Files */ = {
+		D7A18B81181670F400C108C1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D720935B17BA3F43000FB828 /* BZFoursquareLogicTests-Info.plist */,
-				D720936217BA3F43000FB828 /* BZFoursquareLogicTests-Prefix.pch */,
-				D720935C17BA3F43000FB828 /* InfoPlist.strings */,
+				D7A18B82181670F400C108C1 /* BZFoursquareTests-Info.plist */,
+				D7A18B88181670F400C108C1 /* BZFoursquareTests-Prefix.pch */,
+				D7A18B83181670F400C108C1 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -214,22 +219,22 @@
 			productReference = 674BDD9B1460CE0200320FF0 /* FSQDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D720935317BA3F43000FB828 /* BZFoursquareLogicTests */ = {
+		D7A18B7B181670F400C108C1 /* BZFoursquareTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D720936317BA3F43000FB828 /* Build configuration list for PBXNativeTarget "BZFoursquareLogicTests" */;
+			buildConfigurationList = D7A18B8D181670F400C108C1 /* Build configuration list for PBXNativeTarget "BZFoursquareTests" */;
 			buildPhases = (
-				D720934F17BA3F43000FB828 /* Sources */,
-				D720935017BA3F43000FB828 /* Frameworks */,
-				D720935117BA3F43000FB828 /* Resources */,
-				D720935217BA3F43000FB828 /* ShellScript */,
+				D7A18B78181670F400C108C1 /* Sources */,
+				D7A18B79181670F400C108C1 /* Frameworks */,
+				D7A18B7A181670F400C108C1 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D7A18B8A181670F400C108C1 /* PBXTargetDependency */,
 			);
-			name = BZFoursquareLogicTests;
-			productName = BZFoursquareLogicTests;
-			productReference = D720935417BA3F43000FB828 /* BZFoursquareLogicTests.octest */;
+			name = BZFoursquareTests;
+			productName = BZFoursquareTests;
+			productReference = D7A18B7C181670F400C108C1 /* BZFoursquareTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -240,6 +245,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "";
+				TargetAttributes = {
+					D7A18B7B181670F400C108C1 = {
+						TestTargetID = 674BDD9A1460CE0200320FF0;
+					};
+				};
 			};
 			buildConfigurationList = 674BDD951460CE0100320FF0 /* Build configuration list for PBXProject "FSQDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -254,7 +264,7 @@
 			projectRoot = "";
 			targets = (
 				674BDD9A1460CE0200320FF0 /* FSQDemo */,
-				D720935317BA3F43000FB828 /* BZFoursquareLogicTests */,
+				D7A18B7B181670F400C108C1 /* BZFoursquareTests */,
 			);
 		};
 /* End PBXProject section */
@@ -273,31 +283,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D720935117BA3F43000FB828 /* Resources */ = {
+		D7A18B7A181670F400C108C1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D720935E17BA3F43000FB828 /* InfoPlist.strings in Resources */,
+				D7A18B85181670F400C108C1 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		D720935217BA3F43000FB828 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		674BDD971460CE0200320FF0 /* Sources */ = {
@@ -313,16 +307,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D720934F17BA3F43000FB828 /* Sources */ = {
+		D7A18B78181670F400C108C1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D720936117BA3F43000FB828 /* BZFoursquareLogicTests.m in Sources */,
-				D720936917BA4816000FB828 /* BZFoursquareRequest.m in Sources */,
+				D7A18B87181670F400C108C1 /* BZFoursquareTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D7A18B8A181670F400C108C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 674BDD9A1460CE0200320FF0 /* FSQDemo */;
+			targetProxy = D7A18B89181670F400C108C1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		674BDDA81460CE0200320FF0 /* InfoPlist.strings */ = {
@@ -341,10 +342,10 @@
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
-		D720935C17BA3F43000FB828 /* InfoPlist.strings */ = {
+		D7A18B83181670F400C108C1 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D720935D17BA3F43000FB828 /* en */,
+				D7A18B84181670F400C108C1 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -442,39 +443,55 @@
 			};
 			name = Release;
 		};
-		D720936417BA3F43000FB828 /* Debug */ = {
+		D7A18B8B181670F400C108C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FSQDemo.app/FSQDemo";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "BZFoursquareLogicTests/BZFoursquareLogicTests-Prefix.pch";
-				INFOPLIST_FILE = "BZFoursquareLogicTests/BZFoursquareLogicTests-Info.plist";
-				ONLY_ACTIVE_ARCH = YES;
+				GCC_PREFIX_HEADER = "BZFoursquareTests/BZFoursquareTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				INFOPLIST_FILE = "BZFoursquareTests/BZFoursquareTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
-		D720936517BA3F43000FB828 /* Release */ = {
+		D7A18B8C181670F400C108C1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FSQDemo.app/FSQDemo";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "BZFoursquareLogicTests/BZFoursquareLogicTests-Prefix.pch";
-				INFOPLIST_FILE = "BZFoursquareLogicTests/BZFoursquareLogicTests-Info.plist";
+				GCC_PREFIX_HEADER = "BZFoursquareTests/BZFoursquareTests-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				INFOPLIST_FILE = "BZFoursquareTests/BZFoursquareTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
@@ -500,11 +517,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D720936317BA3F43000FB828 /* Build configuration list for PBXNativeTarget "BZFoursquareLogicTests" */ = {
+		D7A18B8D181670F400C108C1 /* Build configuration list for PBXNativeTarget "BZFoursquareTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D720936417BA3F43000FB828 /* Debug */,
-				D720936517BA3F43000FB828 /* Release */,
+				D7A18B8B181670F400C108C1 /* Debug */,
+				D7A18B8C181670F400C108C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
