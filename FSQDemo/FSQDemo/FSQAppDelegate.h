@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2013 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -25,9 +25,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FSQAppDelegate : UIResponder <UIApplicationDelegate> {
-    UIWindow    *window_;
-}
-@property(strong,nonatomic) UIWindow *window;
+@interface FSQAppDelegate : UIResponder <UIApplicationDelegate>
+
+@property(nonatomic,strong) UIWindow *window;
 
 @end

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2013 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -29,15 +29,13 @@
 
 @implementation FSQAppDelegate
 
-@synthesize window = window_;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    UINavigationController *navigationController = (UINavigationController *)window_.rootViewController;
-    FSQMasterViewController *masterViewController = [navigationController.viewControllers objectAtIndex:0];
+    UINavigationController *navigationController = (UINavigationController *)_window.rootViewController;
+    FSQMasterViewController *masterViewController = navigationController.viewControllers[0];
     BZFoursquare *foursquare = masterViewController.foursquare;
     return [foursquare handleOpenURL:url];
 }

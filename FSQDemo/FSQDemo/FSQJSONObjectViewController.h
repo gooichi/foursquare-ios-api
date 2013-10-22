@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2013 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -23,9 +23,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-@interface FSQJSONObjectViewController : UITableViewController {
-    id  JSONObject_;
-}
+@interface FSQJSONObjectViewController : UITableViewController
+
 @property(nonatomic,readonly,copy) id JSONObject;
 
 - (id)initWithJSONObject:(id)JSONObject;
