@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2013 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -81,7 +81,7 @@ enum {
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.foursquare = [[BZFoursquare alloc] initWithClientID:kClientID callbackURL:kCallbackURL];
-        foursquare_.version = @"20111119";
+        foursquare_.version = @"20120609";
         foursquare_.locale = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
         foursquare_.sessionDelegate = self;
     }
