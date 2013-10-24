@@ -34,6 +34,7 @@
 #error This file does not support Objective-C Automatic Reference Counting (ARC)
 #endif
 
+#define kMinSupportedVersion    @"20120609"
 #define kAuthorizeBaseURL       @"https://foursquare.com/oauth2/authorize"
 
 @interface BZFoursquare ()
@@ -61,6 +62,7 @@
     if (self) {
         self.clientID = clientID;
         self.callbackURL = callbackURL;
+        self.version = kMinSupportedVersion;
     }
     return self;
 }
