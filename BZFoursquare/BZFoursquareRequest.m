@@ -25,11 +25,6 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "BZFoursquareRequest.h"
-#if BZ_USE_JSONKIT
-#import "JSONKit.h"
-#elif BZ_USE_SBJSON
-#import "SBJson.h"
-#endif
 
 #ifndef __has_feature
 #define __has_feature(x) 0
@@ -65,28 +60,17 @@ static NSString * _BZGetMIMEBoundary() {
 @property(nonatomic,copy,readwrite) NSString *path;
 @property(nonatomic,copy,readwrite) NSString *HTTPMethod;
 @property(nonatomic,copy,readwrite) NSDictionary *parameters;
+@property(nonatomic,retain,setter=_setDelegateQueue:) NSOperationQueue *_delegateQueue;
 @property(nonatomic,retain) NSURLConnection *connection;
 @property(nonatomic,retain) NSMutableData *responseData;
 @property(nonatomic,copy,readwrite) NSDictionary *meta;
 @property(nonatomic,copy,readwrite) NSArray *notifications;
 @property(nonatomic,copy,readwrite) NSDictionary *response;
-- (NSOperationQueue *)_delegateQueue;
-- (void)_setDelegateQueue:(NSOperationQueue *)delegateQueue;
 - (NSURLRequest *)requestForGETMethod;
 - (NSURLRequest *)requestForPOSTMethod;
 @end
 
 @implementation BZFoursquareRequest
-
-@synthesize path = path_;
-@synthesize HTTPMethod = HTTPMethod_;
-@synthesize parameters = parameters_;
-@synthesize delegate = delegate_;
-@synthesize connection = connection_;
-@synthesize responseData = responseData_;
-@synthesize meta = meta_;
-@synthesize notifications = notifications_;
-@synthesize response = response_;
 
 + (NSURL *)baseURL {
     return [NSURL URLWithString:kAPIv2BaseURL];
@@ -112,7 +96,7 @@ static NSString * _BZGetMIMEBoundary() {
     self.HTTPMethod = nil;
     self.parameters = nil;
     self.delegate = nil;
-    [self _setDelegateQueue:nil];
+    self._delegateQueue = nil;
     self.connection = nil;
     self.responseData = nil;
     self.meta = nil;
@@ -130,7 +114,7 @@ static NSString * _BZGetMIMEBoundary() {
         return nil;
     } else {
         // 6.0 or later
-        return [self _delegateQueue];
+        return __delegateQueue;
     }
 }
 
@@ -142,7 +126,7 @@ static NSString * _BZGetMIMEBoundary() {
         [self doesNotRecognizeSelector:_cmd];
     } else {
         // 6.0 or later
-        [self _setDelegateQueue:delegateQueue];
+        self._delegateQueue = delegateQueue;
     }
 }
 
@@ -152,25 +136,25 @@ static NSString * _BZGetMIMEBoundary() {
     self.notifications = nil;
     self.response = nil;
     NSURLRequest *request;
-    if ([HTTPMethod_ isEqualToString:@"GET"]) {
+    if ([_HTTPMethod isEqualToString:@"GET"]) {
         request = [self requestForGETMethod];
-    } else if ([HTTPMethod_ isEqualToString:@"POST"]) {
+    } else if ([_HTTPMethod isEqualToString:@"POST"]) {
         request = [self requestForPOSTMethod];
     } else {
-        NSAssert2(NO, @"*** %s: HTTP %@ method not supported", __PRETTY_FUNCTION__, HTTPMethod_);
+        NSAssert2(NO, @"*** %s: HTTP %@ method not supported", __PRETTY_FUNCTION__, _HTTPMethod);
         request = nil;
     }
     self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO] autorelease];
-    NSAssert1(connection_ != nil, @"*** %s: connection is nil", __PRETTY_FUNCTION__);
-    if (delegateQueue_) {
-        [connection_ setDelegateQueue:delegateQueue_];
+    NSAssert1(_connection != nil, @"*** %s: connection is nil", __PRETTY_FUNCTION__);
+    if (__delegateQueue) {
+        [_connection setDelegateQueue:__delegateQueue];
     }
-    [connection_ start];
+    [_connection start];
 }
 
 - (void)cancel {
-    if (connection_) {
-        [connection_ cancel];
+    if (_connection) {
+        [_connection cancel];
         self.connection = nil;
         self.responseData = nil;
     }
@@ -181,72 +165,37 @@ static NSString * _BZGetMIMEBoundary() {
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     self.responseData = [NSMutableData data];
-    if ([delegate_ respondsToSelector:@selector(requestDidStartLoading:)]) {
-        [delegate_ requestDidStartLoading:self];
+    if ([_delegate respondsToSelector:@selector(requestDidStartLoading:)]) {
+        [_delegate requestDidStartLoading:self];
     }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [responseData_ appendData:data];
+    [_responseData appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSString *responseString = [[[NSString alloc] initWithData:responseData_ encoding:NSUTF8StringEncoding] autorelease];
-    NSDictionary *response;
+    NSString *responseString = [[[NSString alloc] initWithData:_responseData encoding:NSUTF8StringEncoding] autorelease];
     NSError *error = nil;
-#if defined(__IPHONE_5_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
-    response = [NSJSONSerialization JSONObjectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
-#elif defined(__IPHONE_5_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0
-    if ([NSJSONSerialization class]) {
-        response = [NSJSONSerialization JSONObjectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
-    } else {
-#if BZ_USE_JSONKIT
-        JSONDecoder *decoder = [JSONDecoder decoder];
-        response = [decoder objectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-#elif BZ_USE_SBJSON
-        SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-        response = [parser objectWithString:responseString];
-        if (!response) {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:parser.error forKey:NSLocalizedDescriptionKey];
-            error = [NSError errorWithDomain:@"org.brautaset.SBJsonParser.ErrorDomain" code:0 userInfo:userInfo];
-        }
-#else
-#error BZ_USE_* must be defined
-#endif
-    }
-#else
-#if BZ_USE_JSONKIT
-    JSONDecoder *decoder = [JSONDecoder decoder];
-    response = [decoder objectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] error:&error];
-#elif BZ_USE_SBJSON
-    SBJsonParser *parser = [[[SBJsonParser alloc] init] autorelease];
-    response = [parser objectWithString:responseString];
-    if (!response) {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:parser.error forKey:NSLocalizedDescriptionKey];
-        error = [NSError errorWithDomain:@"org.brautaset.SBJsonParser.ErrorDomain" code:0 userInfo:userInfo];
-    }
-#else
-#error BZ_USE_* must be defined
-#endif
-#endif
+    NSDictionary *response = [NSJSONSerialization JSONObjectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
     if (!response) {
         goto bye;
     }
-    self.meta = [response objectForKey:@"meta"];
-    self.notifications = [response objectForKey:@"notifications"];
-    self.response = [response objectForKey:@"response"];
-    NSInteger code = [[meta_ objectForKey:@"code"] integerValue];
+    self.meta = response[@"meta"];
+    self.notifications = response[@"notifications"];
+    self.response = response[@"response"];
+    NSInteger code = [_meta[@"code"] integerValue];
     if (code / 100 != 2) {
-        error = [NSError errorWithDomain:BZFoursquareErrorDomain code:code userInfo:meta_];
+        error = [NSError errorWithDomain:BZFoursquareErrorDomain code:code userInfo:_meta];
     }
 bye:
     if (error) {
-        if ([delegate_ respondsToSelector:@selector(request:didFailWithError:)]) {
-            [delegate_ request:self didFailWithError:error];
+        if ([_delegate respondsToSelector:@selector(request:didFailWithError:)]) {
+            [_delegate request:self didFailWithError:error];
         }
     } else {
-        if ([delegate_ respondsToSelector:@selector(requestDidFinishLoading:)]) {
-            [delegate_ requestDidFinishLoading:self];
+        if ([_delegate respondsToSelector:@selector(requestDidFinishLoading:)]) {
+            [_delegate requestDidFinishLoading:self];
         }
     }
     self.connection = nil;
@@ -254,8 +203,8 @@ bye:
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    if ([delegate_ respondsToSelector:@selector(request:didFailWithError:)]) {
-        [delegate_ request:self didFailWithError:error];
+    if ([_delegate respondsToSelector:@selector(request:didFailWithError:)]) {
+        [_delegate request:self didFailWithError:error];
     }
     self.connection = nil;
     self.responseData = nil;
@@ -264,21 +213,10 @@ bye:
 #pragma mark -
 #pragma mark Anonymous category
 
-- (NSOperationQueue *)_delegateQueue {
-    return delegateQueue_;
-}
-
-- (void)_setDelegateQueue:(NSOperationQueue *)delegateQueue {
-    if (delegateQueue_ != delegateQueue) {
-        [delegateQueue_ release];
-        delegateQueue_ = [delegateQueue retain];
-    }
-}
-
 - (NSURLRequest *)requestForGETMethod {
     NSMutableArray *pairs = [NSMutableArray array];
-    for (NSString *key in parameters_) {
-        NSString *value = [parameters_ objectForKey:key];
+    for (NSString *key in _parameters) {
+        NSString *value = _parameters[key];
         if (![value isKindOfClass:[NSString class]]) {
             if ([value isKindOfClass:[NSNumber class]]) {
                 value = [value description];
@@ -293,7 +231,7 @@ bye:
         [pairs addObject:pair];
         CFRelease(escapedValue);
     }
-    NSString *URLString = [kAPIv2BaseURL stringByAppendingPathComponent:path_];
+    NSString *URLString = [kAPIv2BaseURL stringByAppendingPathComponent:_path];
     NSMutableString *mURLString = [[URLString mutableCopy] autorelease];
     [mURLString appendString:@"?"];
     [mURLString appendString:[pairs componentsJoinedByString:@"&"]];
@@ -302,7 +240,7 @@ bye:
 }
 
 - (NSURLRequest *)requestForPOSTMethod {
-    NSString *URLString = [kAPIv2BaseURL stringByAppendingPathComponent:path_];
+    NSString *URLString = [kAPIv2BaseURL stringByAppendingPathComponent:_path];
     NSURL *URL = [NSURL URLWithString:URLString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kTimeoutInterval];
     [request setHTTPMethod:@"POST"];
@@ -319,14 +257,14 @@ bye:
     NSString *dashBoundary = [NSString stringWithFormat:@"--%@", boundary];
     NSData *dashBoundaryData = [dashBoundary dataUsingEncoding:NSUTF8StringEncoding];
     NSData *crlfData = [NSData dataWithBytes:"\r\n" length:2];
-    for (NSString *key in parameters_) {
-        NSString *value = [parameters_ objectForKey:key];
+    for (NSString *key in _parameters) {
+        NSString *value = _parameters[key];
         if (![value isKindOfClass:[NSString class]]) {
             if ([value isKindOfClass:[NSNumber class]]) {
                 value = [value description];
             } else {
                 if ([value isKindOfClass:[NSData class]]) {
-                    [datas setObject:value forKey:key];
+                    datas[key] = value;
                 }
                 continue;
             }
@@ -369,7 +307,7 @@ bye:
         // empty line
         [body appendData:crlfData];
         // content
-        [body appendData:[datas objectForKey:key]];
+        [body appendData:datas[key]];
         // CRLF
         [body appendData:crlfData];
     }

@@ -71,25 +71,19 @@ enum {
 
 @implementation FSQMasterViewController
 
-@synthesize foursquare = foursquare_;
-@synthesize request = request_;
-@synthesize meta = meta_;
-@synthesize notifications = notifications_;
-@synthesize response = response_;
-
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.foursquare = [[BZFoursquare alloc] initWithClientID:kClientID callbackURL:kCallbackURL];
-        foursquare_.version = @"20120609";
-        foursquare_.locale = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
-        foursquare_.sessionDelegate = self;
+        _foursquare.version = @"20120609";
+        _foursquare.locale = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
+        _foursquare.sessionDelegate = self;
     }
     return self;
 }
 
 - (void)dealloc {
-    foursquare_.sessionDelegate = nil;
+    _foursquare.sessionDelegate = nil;
     [self cancelRequest];
 }
 
@@ -102,7 +96,7 @@ enum {
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
     case kAuthenticationSection:
-        if (![foursquare_ isSessionValid]) {
+        if (![_foursquare isSessionValid]) {
             cell.textLabel.text = NSLocalizedString(@"Obtain Access Token", @"");
         } else {
             cell.textLabel.text = NSLocalizedString(@"Forget Access Token", @"");
@@ -113,13 +107,13 @@ enum {
             id collection = nil;
             switch (indexPath.row) {
             case kMetaRow:
-                collection = meta_;
+                collection = _meta;
                 break;
             case kNotificationsRow:
-                collection = notifications_;
+                collection = _notifications;
                 break;
             case kResponseRow:
-                collection = response_;
+                collection = _response;
                 break;
             }
             if (!collection) {
@@ -150,11 +144,11 @@ enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
     case kAuthenticationSection:
-        if (![foursquare_ isSessionValid]) {
-            [foursquare_ startAuthorization];
+        if (![_foursquare isSessionValid]) {
+            [_foursquare startAuthorization];
         } else {
-            [foursquare_ invalidateSession];
-            NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+            [_foursquare invalidateSession];
+            NSArray *indexPaths = @[indexPath];
             [tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
             [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         }
@@ -179,13 +173,13 @@ enum {
             id JSONObject = nil;
             switch (indexPath.row) {
             case kMetaRow:
-                JSONObject = meta_;
+                JSONObject = _meta;
                 break;
             case kNotificationsRow:
-                JSONObject = notifications_;
+                JSONObject = _notifications;
                 break;
             case kResponseRow:
-                JSONObject = response_;
+                JSONObject = _response;
                 break;
             }
             FSQJSONObjectViewController *JSONObjectViewController = [[FSQJSONObjectViewController alloc] initWithJSONObject:JSONObject];
@@ -211,7 +205,7 @@ enum {
 
 - (void)request:(BZFoursquareRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%s: %@", __PRETTY_FUNCTION__, error);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[[error userInfo] objectForKey:@"errorDetail"] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[error userInfo][@"errorDetail"] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
     [alertView show];
     self.meta = request.meta;
     self.notifications = request.notifications;
@@ -226,7 +220,7 @@ enum {
 
 - (void)foursquareDidAuthorize:(BZFoursquare *)foursquare {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:kAccessTokenRow inSection:kAuthenticationSection];
-    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+    NSArray *indexPaths = @[indexPath];
     [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
 }
 
@@ -248,9 +242,9 @@ enum {
 }
 
 - (void)cancelRequest {
-    if (request_) {
-        request_.delegate = nil;
-        [request_ cancel];
+    if (_request) {
+        _request.delegate = nil;
+        [_request cancel];
         self.request = nil;
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
@@ -265,18 +259,18 @@ enum {
 
 - (void)searchVenues {
     [self prepareForRequest];
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"40.7,-74", @"ll", nil];
-    self.request = [foursquare_ requestWithPath:@"venues/search" HTTPMethod:@"GET" parameters:parameters delegate:self];
-    [request_ start];
+    NSDictionary *parameters = @{@"ll": @"40.7,-74"};
+    self.request = [_foursquare requestWithPath:@"venues/search" HTTPMethod:@"GET" parameters:parameters delegate:self];
+    [_request start];
     [self updateView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)checkin {
     [self prepareForRequest];
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"4d341a00306160fcf0fc6a88", @"venueId", @"public", @"broadcast", nil];
-    self.request = [foursquare_ requestWithPath:@"checkins/add" HTTPMethod:@"POST" parameters:parameters delegate:self];
-    [request_ start];
+    NSDictionary *parameters = @{@"venueId": @"4d341a00306160fcf0fc6a88", @"broadcast": @"public"};
+    self.request = [_foursquare requestWithPath:@"checkins/add" HTTPMethod:@"POST" parameters:parameters delegate:self];
+    [_request start];
     [self updateView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
@@ -285,9 +279,9 @@ enum {
     [self prepareForRequest];
     NSURL *photoURL = [[NSBundle mainBundle] URLForResource:@"TokyoBa-Z" withExtension:@"jpg"];
     NSData *photoData = [NSData dataWithContentsOfURL:photoURL];
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:photoData, @"photo.jpg", @"4d341a00306160fcf0fc6a88", @"venueId", nil];
-    self.request = [foursquare_ requestWithPath:@"photos/add" HTTPMethod:@"POST" parameters:parameters delegate:self];
-    [request_ start];
+    NSDictionary *parameters = @{@"photo.jpg": photoData, @"venueId": @"4d341a00306160fcf0fc6a88"};
+    self.request = [_foursquare requestWithPath:@"photos/add" HTTPMethod:@"POST" parameters:parameters delegate:self];
+    [_request start];
     [self updateView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }

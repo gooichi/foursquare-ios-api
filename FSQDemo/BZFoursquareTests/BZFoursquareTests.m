@@ -1,33 +1,31 @@
 //
-//  BZFoursquareLogicTests.m
-//  BZFoursquareLogicTests
+//  BZFoursquareTests.m
+//  BZFoursquareTests
 //
 
-#import "BZFoursquareLogicTests.h"
+#import <SenTestingKit/SenTestingKit.h>
+#import "BZFoursquareRequest.h"
 
 #ifndef NSFoundationVersionNumber_iOS_5_1
 #define NSFoundationVersionNumber_iOS_5_1  890.1
 #endif
 
-@interface BZFoursquareLogicTests ()
-@property(nonatomic,retain) NSConditionLock *lock;
+@interface BZFoursquareTests : SenTestCase <BZFoursquareRequestDelegate>
+
+@property(nonatomic,strong) NSConditionLock *lock;
+
 @end
 
-@implementation BZFoursquareLogicTests
+@implementation BZFoursquareTests
 
 - (void)setUp {
     [super setUp];
-    // Set-up code here.
+    // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown {
-    // Tear-down code here.
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
-}
-
-- (void)testThatMakesSureWeDontFinishTooFast {
-    // Avoid "Tests did not finish" warning
-    [NSThread sleepForTimeInterval:1];
 }
 
 - (void)testDelegateQueue {

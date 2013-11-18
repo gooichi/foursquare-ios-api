@@ -5,26 +5,21 @@ A simple Objective-C wrapper for the foursquare API v2. It allows you to integra
 ## Features
 
 * Simple, small and easy to use
-* Authentication using Safari
+* Authentication using Safari (see Future Plans below)
 * Asynchronous requests support
 * Open source BSD license
 
 ## Requirements
 
-* Xcode 4.5 or later
-* Base SDK: iOS 6.0 or later
-* Deployment Target: iOS 4.3 or later
+* Xcode 5 or later
+* Base SDK: iOS 7.0 or later
+* Deployment Target: iOS 5.0 or later
 
 This library requires your app to link against the following frameworks:
 
 * Foundation.framework
 * MobileCoreServices.framework
 * UIKit.framework
-
-If your deployment target is set to iOS 4.3 or earlier, one of the following JSON libraries is required. If your deployment target is set to iOS 5.0 or later, it is not required.
-
-* [JSONKit](https://github.com/johnezang/JSONKit)
-* [SBJson](https://github.com/stig/json-framework)
 
 ## Getting Started
 
@@ -54,10 +49,6 @@ If your deployment target is set to iOS 4.3 or earlier, one of the following JSO
 
 	![Mobile Core Services](https://github.com/markdorison/foursquare-ios-api/raw/master/images/mobilecoreservices.png "Mobile Core Services")
 
-	#### JSON Library
-
-	If your deployment target is set to iOS 4.3 or earlier, [JSONKit](https://github.com/johnezang/JSONKit) or [SBJson](https://github.com/stig/json-framework) is required. If you want to use [JSONKit](https://github.com/johnezang/JSONKit), you need to set the `-DBZ_USE_JSONKIT=1` compiler flag on the BZFoursquareRequest source file. If you want to use [SBJson](https://github.com/stig/json-framework), you need to set the `-DBZ_USE_SBJSON=1` compiler flag on the BZFoursquareRequest source file.
-
 3. ### Set up your custom URL scheme
 
 	Add your custom URL scheme to your project. The following is the setting of the FSQDemo project.
@@ -68,10 +59,14 @@ If your deployment target is set to iOS 4.3 or earlier, one of the following JSO
 
 This library comes with FSQDemo app that demonstrates authorization, making API calls to guide you in development.
 
-To build and run FSQDemo app, open the FSQDemo project with Xcode 4.5 or later and set `FOURSQURE_CLIENT_ID` to your client ID.
+To build and run FSQDemo app, open the FSQDemo project with Xcode 5 or later and set `FOURSQURE_CLIENT_ID` to your client ID.
 
 ![FOURSQURE\_CLIENT\_ID](https://github.com/baztokyo/foursquare-ios-api/raw/master/images/foursquare_client_id.png "FOURSQURE_CLIENT_ID")
 
 ## License
 
 Foursquare API v2 for iOS is available under the 2-clause BSD license. See the LICENSE file for more info.
+
+## Future Plans
+
+* Foursquare native authentication support

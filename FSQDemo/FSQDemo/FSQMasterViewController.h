@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2013 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -26,13 +26,8 @@
 #import <UIKit/UIKit.h>
 #import "BZFoursquare.h"
 
-@interface FSQMasterViewController : UITableViewController <BZFoursquareRequestDelegate, BZFoursquareSessionDelegate> {
-    BZFoursquare        *foursquare_;
-    BZFoursquareRequest *request_;
-    NSDictionary        *meta_;
-    NSArray             *notifications_;
-    NSDictionary        *response_;
-}
+@interface FSQMasterViewController : UITableViewController <BZFoursquareRequestDelegate, BZFoursquareSessionDelegate>
+
 @property(nonatomic,readonly,strong) BZFoursquare *foursquare;
 
 @end

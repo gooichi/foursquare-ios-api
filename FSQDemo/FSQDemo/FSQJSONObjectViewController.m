@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ba-Z Communication Inc. All rights reserved.
+ * Copyright (C) 2011-2013 Ba-Z Communication Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -34,8 +34,6 @@
 
 @implementation FSQJSONObjectViewController
 
-@synthesize JSONObject = JSONObject_;
-
 - (id)initWithJSONObject:(id)JSONObject {
     self = [self initWithStyle:UITableViewStyleGrouped];
     if (self) {
@@ -62,13 +60,12 @@
     return [super canPerformAction:action withSender:sender];
 }
 
-#pragma mark -
-#pragma mark UITableViewDataSource
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([JSONObject_ isKindOfClass:[NSArray class]]
-        || [JSONObject_ isKindOfClass:[NSDictionary class]]) {
-        return [JSONObject_ count];
+    if ([_JSONObject isKindOfClass:[NSArray class]]
+        || [_JSONObject isKindOfClass:[NSDictionary class]]) {
+        return [_JSONObject count];
     } else {
         return 1;
     }
@@ -89,17 +86,17 @@
         cell.gestureRecognizers = nil;
     }
     id value;
-    if ([JSONObject_ isKindOfClass:[NSNull class]]) {
-        value = JSONObject_;
-    } else if ([JSONObject_ isKindOfClass:[NSDictionary class]]) {
-        id key = [[[JSONObject_ allKeys] sortedArrayUsingSelector:@selector(compare:)] objectAtIndex:indexPath.row];
+    if ([_JSONObject isKindOfClass:[NSNull class]]) {
+        value = _JSONObject;
+    } else if ([_JSONObject isKindOfClass:[NSDictionary class]]) {
+        id key = [[_JSONObject allKeys] sortedArrayUsingSelector:@selector(compare:)][indexPath.row];
         cell.textLabel.text = [key description];
-        value = [JSONObject_ objectForKey:key];
-    } else if ([JSONObject_ isKindOfClass:[NSArray class]]) {
+        value = _JSONObject[key];
+    } else if ([_JSONObject isKindOfClass:[NSArray class]]) {
         cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Item %ld", @""), indexPath.row];
-        value = [JSONObject_ objectAtIndex:indexPath.row];
+        value = _JSONObject[indexPath.row];
     } else {
-        value = JSONObject_;
+        value = _JSONObject;
     }
     if ([value isKindOfClass:[NSNull class]]) {
         cell.detailTextLabel.text = @"null";
@@ -137,7 +134,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return JSONObject_ ? 1 : 0;
+    return _JSONObject ? 1 : 0;
 }
 
 #pragma mark -
@@ -154,11 +151,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     id value = nil;
-    if ([JSONObject_ isKindOfClass:[NSDictionary class]]) {
-        id key = [[[JSONObject_ allKeys] sortedArrayUsingSelector:@selector(compare:)] objectAtIndex:indexPath.row];
-        value = [JSONObject_ objectForKey:key];
-    } else if ([JSONObject_ isKindOfClass:[NSArray class]]) {
-        value = [JSONObject_ objectAtIndex:indexPath.row];
+    if ([_JSONObject isKindOfClass:[NSDictionary class]]) {
+        id key = [[_JSONObject allKeys] sortedArrayUsingSelector:@selector(compare:)][indexPath.row];
+        value = _JSONObject[key];
+    } else if ([_JSONObject isKindOfClass:[NSArray class]]) {
+        value = _JSONObject[indexPath.row];
     }
     if ([value isKindOfClass:[NSDictionary class]]
         || [value isKindOfClass:[NSArray class]]) {
@@ -171,8 +168,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Anonymous category
+#pragma mark - Anonymous category
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)longPressRecognizer {
     if (longPressRecognizer.state == UIGestureRecognizerStateBegan) {

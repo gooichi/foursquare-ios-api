@@ -27,18 +27,8 @@
 
 @protocol BZFoursquareRequestDelegate;
 
-@interface BZFoursquareRequest : NSObject {
-    NSString            *path_;
-    NSString            *HTTPMethod_;
-    NSDictionary        *parameters_;
-    id<BZFoursquareRequestDelegate> delegate_;
-    NSOperationQueue    *delegateQueue_;
-    NSURLConnection     *connection_;
-    NSMutableData       *responseData_;
-    NSDictionary        *meta_;
-    NSArray             *notifications_;
-    NSDictionary        *response_;
-}
+@interface BZFoursquareRequest : NSObject
+
 @property(nonatomic,copy,readonly) NSString *path;
 @property(nonatomic,copy,readonly) NSString *HTTPMethod;
 @property(nonatomic,copy,readonly) NSDictionary *parameters;
