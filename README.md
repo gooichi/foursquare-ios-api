@@ -47,7 +47,7 @@ This library requires your app to link against the following frameworks:
 
 	You will need to add the MobileCoreServices library to your project. To do this in Xcode, go to your active target and select the "Build Phases" tab. In the "Link Binary with Libraries" section, click the plus button and select MobileCoreServices from the dialog box that is presented.
 
-	![Mobile Core Services](https://github.com/markdorison/foursquare-ios-api/raw/master/images/mobilecoreservices.png "Mobile Core Services")
+	![Mobile Core Services](https://github.com/baztokyo/foursquare-ios-api/raw/master/images/mobilecoreservices.png "Mobile Core Services")
 
 3. ### Set up your custom URL scheme
 
